@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>CreditLens AI — Credit Intelligence Dashboard</title>
+<title>CreditLens AI — Smart Credit Intelligence</title>
 <style>
   :root {
     --navy:    #0F2645;
@@ -25,18 +25,23 @@
     --gray900: #111827;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Inter', system-ui, sans-serif; background: var(--gray50); color: var(--gray700); min-height: 100vh; }
+  body { 
+    font-family: 'Inter', system-ui, -apple-system, sans-serif; 
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: var(--gray700); 
+    min-height: 100vh; 
+  }
 
   /* ── Layout ────────────────────────────────────────────────────────── */
   .topbar {
-    background: var(--navy);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     padding: 0 2rem;
-    height: 56px;
+    height: 64px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: sticky; top: 0; z-index: 100;
-    box-shadow: 0 2px 12px rgba(0,0,0,.35);
+    box-shadow: 0 4px 20px rgba(0,0,0,.15);
   }
   .topbar-left { display: flex; align-items: center; gap: .75rem; }
   .topbar-logo { font-size: 1.15rem; font-weight: 800; color: #fff; letter-spacing: -.3px; }
@@ -207,6 +212,733 @@
   .empty-state h3 { font-size: 1rem; font-weight: 600; color: var(--gray600); margin-bottom: .5rem; }
   .empty-state p  { font-size: .82rem; }
 
+  /* ──────────────────────────────────────────────────────────────────── */
+  /* NEW UPGRADED UI STYLES */
+  /* ──────────────────────────────────────────────────────────────────── */
+
+  /* ── Hero Dashboard ──────────────────────────────────────────────────── */
+  .hero-panel {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    color: #fff;
+    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-panel::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+  }
+  .hero-score {
+    text-align: center;
+  }
+  .hero-score-num {
+    font-size: 5rem;
+    font-weight: 900;
+    line-height: 1;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+  .hero-score-max {
+    font-size: 1.2rem;
+    opacity: 0.8;
+    margin-top: 0.5rem;
+  }
+  .hero-status {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.5rem 1.5rem;
+    background: rgba(255,255,255,0.2);
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    backdrop-filter: blur(10px);
+  }
+  .hero-info {
+    flex: 1;
+  }
+  .hero-label {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .hero-persona {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+  .hero-meaning {
+    font-size: 1rem;
+    opacity: 0.95;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  .hero-badges {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .hero-badge {
+    padding: 0.6rem 1.2rem;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    backdrop-filter: blur(5px);
+  }
+
+  /* ── What's Happening Section ────────────────────────────────────────── */
+  .whats-happening {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .section-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--gray900);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .section-subtitle {
+    font-size: 0.9rem;
+    color: var(--gray500);
+    margin-bottom: 1.5rem;
+  }
+  .insight-simple {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    background: var(--gray50);
+    border-radius: 12px;
+    border-left: 4px solid;
+    transition: all 0.2s;
+  }
+  .insight-simple:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .insight-simple.positive { border-color: var(--green); background: #F0FDF4; }
+  .insight-simple.warning { border-color: var(--amber); background: #FFFBEB; }
+  .insight-simple.danger { border-color: var(--red); background: #FFF5F5; }
+  .insight-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+  .insight-content {
+    flex: 1;
+  }
+  .insight-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--gray900);
+    margin-bottom: 0.25rem;
+  }
+  .insight-desc {
+    font-size: 0.85rem;
+    color: var(--gray600);
+    line-height: 1.5;
+  }
+
+  /* ── Butterfly Effect Visualization ──────────────────────────────────── */
+  .butterfly-viz {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .butterfly-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+  }
+  .bf-node {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+    border-radius: 12px;
+    border: 2px solid var(--gray200);
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    animation: fadeInUp 0.5s ease backwards;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .bf-node:nth-child(1) { animation-delay: 0.1s; }
+  .bf-node:nth-child(2) { animation-delay: 0.2s; }
+  .bf-node:nth-child(3) { animation-delay: 0.3s; }
+  .bf-node:nth-child(4) { animation-delay: 0.4s; }
+  .bf-node:nth-child(5) { animation-delay: 0.5s; }
+  .bf-node:hover {
+    transform: translateX(8px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    border-color: var(--purple);
+  }
+  .bf-node-num {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 800;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  }
+  .bf-node-content {
+    flex: 1;
+  }
+  .bf-node-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gray900);
+    margin-bottom: 0.25rem;
+  }
+  .bf-node-desc {
+    font-size: 0.85rem;
+    color: var(--gray600);
+  }
+  .bf-arrow-down {
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--purple);
+    margin: 0.25rem 0;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+
+  /* ── Contradictions ──────────────────────────────────────────────────── */
+  .contradiction-card {
+    background: linear-gradient(135deg, #FFF5F5 0%, #FEE2E2 100%);
+    border: 2px dashed var(--red);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .contradiction-card::before {
+    content: '⚠️';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    font-size: 120px;
+    opacity: 0.1;
+  }
+  .contradiction-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .contradiction-icon {
+    font-size: 2rem;
+  }
+  .contradiction-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--red);
+  }
+  .contradiction-body {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  .contradiction-point {
+    padding: 1rem;
+    background: #fff;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .contradiction-vs {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--red);
+  }
+  .contradiction-explanation {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(255,255,255,0.6);
+    border-radius: 10px;
+    font-size: 0.88rem;
+    color: var(--gray700);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  /* ── Prediction Panel ────────────────────────────────────────────────── */
+  .prediction-panel {
+    background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 2px solid var(--blue2);
+  }
+  .prediction-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .prediction-emoji {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+  .prediction-text {
+    flex: 1;
+  }
+  .prediction-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--blue2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.3rem;
+  }
+  .prediction-content {
+    font-size: 0.95rem;
+    color: var(--gray700);
+    font-weight: 600;
+  }
+
+  /* ── Recommendation Panel ────────────────────────────────────────────── */
+  .recommendation-panel {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .recommendation-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 2rem;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+  }
+  .recommendation-status.safe {
+    background: #D1FAE5;
+    color: #065F46;
+  }
+  .recommendation-status.monitor {
+    background: #FEF9C3;
+    color: #854D0E;
+  }
+  .recommendation-status.reduce {
+    background: #FEE2E2;
+    color: #991B1B;
+  }
+  .recommendation-action {
+    padding: 1.5rem;
+    background: var(--gray50);
+    border-radius: 12px;
+    border-left: 4px solid var(--blue2);
+  }
+  .recommendation-action-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--gray500);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.75rem;
+  }
+  .recommendation-action-steps {
+    list-style: none;
+    padding: 0;
+  }
+  .recommendation-action-steps li {
+    padding: 0.75rem 0;
+    font-size: 0.95rem;
+    color: var(--gray700);
+    border-bottom: 1px solid var(--gray200);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .recommendation-action-steps li:last-child {
+    border-bottom: none;
+  }
+  .recommendation-action-steps li::before {
+    content: '✓';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--blue2);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  /* ── Simulation System ───────────────────────────────────────────────── */
+  .simulation-panel {
+    background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 2px solid var(--amber);
+  }
+  .simulation-input-group {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .simulation-input {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    border: 2px solid var(--gray300);
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .simulation-input:focus {
+    outline: none;
+    border-color: var(--amber);
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.1);
+  }
+  .simulation-btn {
+    padding: 1rem 2rem;
+    background: var(--amber);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .simulation-btn:hover {
+    background: #B45309;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+  }
+  .simulation-examples {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+  .sim-example {
+    padding: 0.4rem 0.9rem;
+    background: #fff;
+    border: 1px solid var(--gray300);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .sim-example:hover {
+    background: var(--amber);
+    color: #fff;
+    border-color: var(--amber);
+  }
+  .simulation-result {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: 12px;
+    border: 2px solid var(--green);
+    animation: slideInUp 0.4s ease;
+  }
+  @keyframes slideInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .simulation-result-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .simulation-score-change {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 1.4rem;
+    font-weight: 800;
+  }
+  .sim-arrow {
+    font-size: 1.8rem;
+    color: var(--gray400);
+  }
+
+  /* ── Message Input Demo ──────────────────────────────────────────────── */
+  .message-demo {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .message-mockup {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    color: #fff;
+  }
+  .message-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+  }
+  .message-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #fff;
+    color: #128C7E;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 800;
+  }
+  .message-name {
+    flex: 1;
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+  .message-input-area {
+    display: flex;
+    gap: 0.75rem;
+  }
+  .message-input {
+    flex: 1;
+    padding: 0.9rem 1.2rem;
+    border: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-family: inherit;
+  }
+  .message-send {
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+    background: #fff;
+    color: #128C7E;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .message-send:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  .message-updates {
+    padding: 1rem;
+    background: var(--sky);
+    border-radius: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  .message-update-item {
+    padding: 0.75rem;
+    background: #fff;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--gray700);
+    border-left: 3px solid var(--blue2);
+    animation: fadeIn 0.3s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* ── Explain Simply Toggle ───────────────────────────────────────────── */
+  .toggle-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+  }
+  .toggle-label {
+    flex: 1;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--gray700);
+  }
+  .toggle-switch {
+    position: relative;
+    width: 60px;
+    height: 30px;
+    background: var(--gray300);
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .toggle-switch.active {
+    background: var(--green);
+  }
+  .toggle-slider {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    background: #fff;
+    border-radius: 50%;
+    transition: all 0.3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  .toggle-switch.active .toggle-slider {
+    left: 33px;
+  }
+
+  /* ── Interactive Loan Cards ──────────────────────────────────────────── */
+  .loan-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .loan-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: all 0.3s;
+    cursor: pointer;
+    border: 2px solid transparent;
+  }
+  .loan-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    border-color: var(--blue2);
+  }
+  .loan-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+  .loan-card-id {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--gray900);
+  }
+  .loan-card-score {
+    font-size: 1.8rem;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .loan-card-score.good { color: var(--green); }
+  .loan-card-score.warning { color: var(--amber); }
+  .loan-card-score.danger { color: var(--red); }
+  .loan-card-status {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  .loan-card-status.safe { background: #D1FAE5; color: #065F46; }
+  .loan-card-status.watch { background: #FEF9C3; color: #854D0E; }
+  .loan-card-status.danger { background: #FEE2E2; color: #991B1B; }
+  .loan-card-expand {
+    padding: 0.75rem;
+    background: var(--blue2);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.2s;
+  }
+  .loan-card-expand:hover {
+    background: var(--blue);
+    transform: scale(1.02);
+  }
+  .loan-card-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .loan-card-details.expanded {
+    max-height: 1000px;
+    margin-top: 1rem;
+  }
+
+  /* ── Responsive ──────────────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .sidebar { display: none; }
+    .trust-panel { flex-direction: column; }
+    .hero-content { flex-direction: column; text-align: center; }
+    .contradiction-body { grid-template-columns: 1fr; }
+    .contradiction-vs { transform: rotate(90deg); }
+    .loan-cards-grid { grid-template-columns: 1fr; }
+  }
+
   /* ── Tabs ──────────────────────────────────────────────────────────── */
   .tabs { display: flex; gap: 0; border-bottom: 2px solid var(--gray200); margin-bottom: 1.25rem; }
   .tab  { padding: .6rem 1.1rem; font-size: .8rem; font-weight: 600; color: var(--gray400); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all .15s; }
@@ -225,10 +957,15 @@
   .factor-bar-wrap { margin-top: .35rem; background: var(--gray200); border-radius: 4px; height: 5px; }
   .factor-bar { height: 100%; border-radius: 4px; transition: width .6s ease; }
 
+  /* ── Responsive ──────────────────────────────────────────────────────── */
   @media (max-width: 900px) {
     .stat-grid { grid-template-columns: repeat(2, 1fr); }
     .sidebar { display: none; }
     .trust-panel { flex-direction: column; }
+    .hero-content { flex-direction: column; text-align: center; }
+    .contradiction-body { grid-template-columns: 1fr; }
+    .contradiction-vs { transform: rotate(90deg); }
+    .loan-cards-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -238,7 +975,7 @@
 <div class="topbar">
   <div class="topbar-left">
     <div class="topbar-logo">Credit<span>Lens</span> AI</div>
-    <div class="topbar-badge">AGENTIC · v2.0</div>
+    <div class="topbar-badge">SMART · v3.0</div>
   </div>
   <div class="api-status">
     <div class="dot" id="apiDot"></div>
@@ -256,22 +993,21 @@
     </div>
     <div class="sidebar-section">Navigation</div>
     <div class="sidebar-item active" onclick="showView('dashboard')"><span class="icon">🏠</span> Dashboard</div>
-    <div class="sidebar-item" onclick="showView('loans')"><span class="icon">🏦</span> Loan Portfolio</div>
-    <div class="sidebar-item" onclick="showView('butterfly')"><span class="icon">🦋</span> Butterfly Effects</div>
-    <div class="sidebar-item" onclick="showView('insights')"><span class="icon">💡</span> AI Insights</div>
+    <div class="sidebar-item" onclick="showView('loans')"><span class="icon">📊</span> Loan Portfolio</div>
+    <div class="sidebar-item" onclick="showView('simulate')"><span class="icon">🔮</span> Simulate Events</div>
     <div class="sidebar-section">Actions</div>
-    <div class="sidebar-item" id="runAllBtn" onclick="runFullDemo()"><span class="icon">⚡</span> Run Full Analysis</div>
+    <div class="sidebar-item" id="runAllBtn" onclick="runFullDemo()"><span class="icon">⚡</span> Run Analysis</div>
   </aside>
 
   <!-- ── Main ───────────────────────────────────────────────────────── -->
   <main class="main" id="mainArea">
     <div class="empty-state" id="emptyState">
       <div class="icon">🧠</div>
-      <h3>No analysis run yet</h3>
-      <p>Click <strong>Run Full Analysis</strong> in the sidebar, or click<br>
-         <strong>Run AI Health Check</strong> on any loan below.</p>
+      <h3>Welcome to CreditLens AI</h3>
+      <p>Click <strong>Run Analysis</strong> to see the magic happen!<br>
+        Get instant credit intelligence in simple, visual terms.</p>
       <br/>
-      <button class="btn btn-primary" style="margin: 0 auto; display:inline-flex;" onclick="runFullDemo()">⚡ Run Full Analysis</button>
+      <button class="btn btn-primary" style="margin: 0 auto; display:inline-flex;" onclick="runFullDemo()">⚡ Run Analysis</button>
     </div>
   </main>
 </div>
@@ -398,113 +1134,178 @@ function showView(view) {
   const p = state.partner;
   if      (view === 'dashboard')  renderDashboard(p);
   else if (view === 'loans')      renderLoans(p);
-  else if (view === 'butterfly')  renderButterfly(p);
-  else if (view === 'insights')   renderInsights(p);
+  else if (view === 'simulate')   renderSimulate(p);
 }
 
 // ─────────────────────────────────────────────────────────────────────────
-//  Dashboard view
+//  Dashboard view — UPGRADED
 // ─────────────────────────────────────────────────────────────────────────
 function renderDashboard(p) {
   const main = document.getElementById('mainArea');
   const bd = p.scoreBreakdown;
   const loanStats = p.loanScores;
-  const wfTotal = loanStats.reduce((s,l) => s + (l.workflowSummary?.total||0), 0);
   const bfCount = p.butterflyEffects?.length || 0;
+  const contradictions = p.contradictions || [];
+  const predictions = p.predictions || [];
+
+  // Get persona (simplified)
+  const persona = getSimplePersona(p);
+  const riskStatus = getRiskStatus(p);
 
   main.innerHTML = `
-    <div class="page-header">
-      <div class="page-title">Credit Intelligence Dashboard</div>
-      <div class="page-sub">Partner: ${p.partnerId} · ${p.loanScores.length} active loans · Last run: ${new Date(p.timestamp).toLocaleTimeString()}</div>
+    <!-- Explain Simply Toggle -->
+    <div class="toggle-wrapper">
+      <div class="toggle-label">
+        <strong>🧒 Explain Like I'm 5</strong> — Turn complex terms into simple language
+      </div>
+      <div class="toggle-switch" id="simpleToggle" onclick="toggleSimpleMode()">
+        <div class="toggle-slider"></div>
+      </div>
     </div>
 
-    <!-- Trust Score Panel -->
-    <div class="trust-panel">
-      <div class="gauge-wrap">
-        ${gaugeHTML(p.trustScore, 850)}
-        <div class="gauge-score">
-          <div class="gauge-num">${p.trustScore}</div>
-          <div class="gauge-max">/ 850</div>
+    <!-- Hero Dashboard -->
+    <div class="hero-panel">
+      <div class="hero-content">
+        <div class="hero-score">
+          <div class="hero-score-num">${p.trustScore}</div>
+          <div class="hero-score-max">out of 850</div>
+          <div class="hero-status">${riskStatus.label}</div>
+        </div>
+        <div class="hero-info">
+          <div class="hero-label">What this means for you</div>
+          <div class="hero-persona">${persona.title}</div>
+          <div class="hero-meaning">${persona.meaning}</div>
+          <div class="hero-badges">
+            <div class="hero-badge">${p.loanScores.length} Active Loans</div>
+            <div class="hero-badge">Grade ${p.grade}</div>
+            <div class="hero-badge">${bfCount} Risk Factors</div>
+          </div>
         </div>
       </div>
-      <div class="trust-info">
-        <div style="font-size:.7rem;color:#93C5FD;font-weight:700;letter-spacing:1px;margin-bottom:.25rem;">CHANNEL PARTNER TRUST SCORE</div>
-        <div class="trust-grade">${p.grade}</div>
-        <div class="trust-risk" style="color:${riskColor(p.riskLevel)};">${p.riskLevel.replace('_',' ').toUpperCase()}</div>
-        <div class="breakdown-bars">
-          ${bbarHTML('Loan Health (60%)', bd.loanHealthContribution, 510, '#3B82F6')}
-          ${bbarHTML('Financial (20%)',   bd.financialContribution,  170, '#10B981')}
-          ${bbarHTML('Behavioral (12%)',  bd.behavioralContribution, 102, '#8B5CF6')}
-          ${bbarHTML('Contextual (8%)',   bd.contextualContribution,  68, '#F59E0B')}
+    </div>
+
+    <!-- What's Happening Section -->
+    <div class="whats-happening">
+      <div class="section-title">📊 What's Happening?</div>
+      <div class="section-subtitle">Here's what we see in plain English</div>
+      ${generateWhatHappening(p).map(insight => `
+        <div class="insight-simple ${insight.type}">
+          <div class="insight-icon">${insight.icon}</div>
+          <div class="insight-content">
+            <div class="insight-title">${insight.title}</div>
+            <div class="insight-desc">${insight.desc}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <!-- Butterfly Effect Visualization -->
+    ${bfCount > 0 ? `
+    <div class="butterfly-viz">
+      <div class="section-title">🦋 Butterfly Effect — How Small Things Lead to Big Problems</div>
+      <div class="section-subtitle">Watch how one event can trigger a chain reaction</div>
+      <div class="butterfly-flow">
+        ${generateButterflyChain(p).map((node, i) => `
+          ${i > 0 ? '<div class="bf-arrow-down">↓</div>' : ''}
+          <div class="bf-node" style="animation-delay: ${i * 0.15}s">
+            <div class="bf-node-num">${i + 1}</div>
+            <div class="bf-node-content">
+              <div class="bf-node-title">${node.title}</div>
+              <div class="bf-node-desc">${node.desc}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    ` : ''}
+
+    <!-- Contradictions -->
+    ${contradictions.length > 0 ? `
+    <div class="section-title">🤔 Something Unusual Detected</div>
+    ${contradictions.slice(0, 2).map(c => `
+      <div class="contradiction-card">
+        <div class="contradiction-header">
+          <div class="contradiction-icon">⚠️</div>
+          <div class="contradiction-title">Suspicious Pattern Found</div>
+        </div>
+        <div class="contradiction-body">
+          <div class="contradiction-point">✅ ${c.signalA}</div>
+          <div class="contradiction-vs">VS</div>
+          <div class="contradiction-point">❌ ${c.signalB}</div>
+        </div>
+        <div class="contradiction-explanation">
+          💡 Why this matters: ${c.interpretation}
         </div>
       </div>
+    `).join('')}
+    ` : ''}
+
+    <!-- Prediction Panel -->
+    <div class="prediction-panel">
+      <div class="section-title">🔮 What Might Happen Next</div>
+      <div class="section-subtitle">Our AI predicts these scenarios based on current patterns</div>
+      ${generatePredictions(p).map(pred => `
+        <div class="prediction-item">
+          <div class="prediction-emoji">${pred.icon}</div>
+          <div class="prediction-text">
+            <div class="prediction-label">${pred.timeframe}</div>
+            <div class="prediction-content">${pred.text}</div>
+          </div>
+        </div>
+      `).join('')}
     </div>
 
-    <!-- Stat cards -->
-    <div class="stat-grid">
-      <div class="stat-card blue">
-        <div class="stat-label">Trust Score</div>
-        <div class="stat-value">${p.trustScore}</div>
-        <div class="stat-sub">out of 850 · Grade ${p.grade}</div>
-      </div>
-      <div class="stat-card ${p.loanScores.some(l=>l.riskLevel==='critical')?'red':'green'}">
-        <div class="stat-label">Active Loans</div>
-        <div class="stat-value">${p.loanScores.length}</div>
-        <div class="stat-sub">${p.loanScores.filter(l=>l.riskLevel==='critical').length} critical · ${p.loanScores.filter(l=>l.riskLevel==='low').length} low risk</div>
-      </div>
-      <div class="stat-card amber">
-        <div class="stat-label">Workflows Run</div>
-        <div class="stat-value">${wfTotal}</div>
-        <div class="stat-sub">Across ${p.loanScores.length} loans · Agentic paths</div>
-      </div>
-      <div class="stat-card ${bfCount>3?'red':bfCount>0?'amber':'green'}">
-        <div class="stat-label">Butterfly Triggers</div>
-        <div class="stat-value">${bfCount}</div>
-        <div class="stat-sub">${p.ahaMoments?.length||0} Aha Moments detected</div>
-      </div>
+    <!-- Recommendation Panel -->
+    <div class="recommendation-panel">
+      <div class="section-title">✅ What Should You Do?</div>
+      ${generateRecommendation(p)}
     </div>
 
-    <!-- Loan summary table -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">Loan Portfolio</div>
-        <div class="card-sub">Click any row to drill down • Click button to run individual health check</div>
-      </div>
-      <table>
-        <thead><tr>
-          <th>Loan ID</th><th>Type</th><th>Score</th><th>Risk Level</th>
-          <th>Workflows</th><th>High-Risk WF</th><th>Action</th>
-        </tr></thead>
-        <tbody>
-          ${p.loanScores.map(l => `
-          <tr class="loan-row" onclick="openDrawer(${JSON.stringify(l).replace(/"/g,'&quot;')})">
-            <td><strong>${l.loanId}</strong></td>
-            <td style="color:var(--gray600);font-size:.76rem;">${l.parameters?.loan ? 'Working Capital' : '—'}</td>
-            <td>${scorePillHTML(l.score, l.grade)}</td>
-            <td><span class="risk-tag ${l.riskLevel}">${l.riskLevel}</span></td>
-            <td style="font-size:.78rem;">${l.workflowSummary?.triggered||0} / ${l.workflowSummary?.total||0}</td>
-            <td style="font-size:.78rem;color:${l.workflowSummary?.highRisk>0?'var(--red)':'var(--green)'};">
-              ${l.workflowSummary?.highRisk||0}
-            </td>
-            <td onclick="event.stopPropagation()">
-              <button class="btn btn-primary" id="btn-${l.loanId}" onclick="runLoanCheck('${l.loanId}')">🔍 Health Check</button>
-            </td>
-          </tr>`).join('')}
-        </tbody>
-      </table>
+    <!-- Loan Portfolio Cards -->
+    <div class="section-title">💼 Loan Portfolio (${p.loanScores.length} active)</div>
+    <div class="loan-cards-grid">
+      ${p.loanScores.map(l => `
+        <div class="loan-card" onclick="openDrawer(${JSON.stringify(l).replace(/"/g,'&quot;')})">
+          <div class="loan-card-header">
+            <div class="loan-card-id">${l.loanId}</div>
+            <div class="loan-card-score ${l.score >= 70 ? 'good' : l.score >= 40 ? 'warning' : 'danger'}">
+              ${l.score}
+            </div>
+          </div>
+          <div class="loan-card-status ${l.riskLevel === 'low' || l.riskLevel === 'very_low' ? 'safe' : l.riskLevel === 'medium' ? 'watch' : 'danger'}">
+            ${getLoanStatusText(l)}
+          </div>
+          <button class="loan-card-expand" onclick="event.stopPropagation(); runLoanCheck('${l.loanId}')">
+            🔍 Check Health
+          </button>
+        </div>
+      `).join('')}
     </div>
 
-    <!-- Top insights -->
-    <div class="card">
-      <div class="card-header"><div class="card-title">🤖 Top AI Insights</div></div>
-      <div style="padding:1.25rem;">
-        ${(p.topInsights||[]).map((ins,i) => `
-        <div class="insight-card">
-          <div class="insight-num">${i+1}</div>
-          <div class="insight-text">${ins}</div>
-        </div>`).join('') || '<div style="color:var(--gray400);font-size:.82rem;padding:.5rem;">No insights generated.</div>'}
+    <!-- Message Demo -->
+    <div class="message-demo">
+      <div class="section-title">💬 Live Message Demo</div>
+      <div class="section-subtitle">Type a message like "Paid ₹5000 today" and watch the system update live!</div>
+      <div class="message-mockup">
+        <div class="message-header">
+          <div class="message-avatar">👤</div>
+          <div class="message-name">Customer SMS</div>
+        </div>
+        <div class="message-input-area">
+          <input type="text" class="message-input" id="messageInput" 
+            placeholder="Type: Paid ₹5000 today"
+            onkeypress="if(event.key==='Enter') processMessage()">
+          <button class="message-send" onclick="processMessage()">▶</button>
+        </div>
       </div>
-    </div>`;
+      <div class="message-updates" id="messageUpdates"></div>
+    </div>
+  `;
+
+  // Initialize simple mode state
+  if (state.simpleMode) {
+    document.getElementById('simpleToggle').classList.add('active');
+  }
 }
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -758,8 +1559,409 @@ function gaugeHTML(val, max) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────
+//  NEW HELPER FUNCTIONS FOR UPGRADED UI
+// ─────────────────────────────────────────────────────────────────────────
+
+function getSimplePersona(p) {
+  const score = p.trustScore;
+  const risk = p.riskLevel;
+  
+  if (score >= 700) {
+    return {
+      title: "✅ Trusted Partner",
+      meaning: "This partner is doing great! They pay on time, have good cash flow, and are low risk. Safe to continue lending."
+    };
+  } else if (score >= 500) {
+    return {
+      title: "⚠️ Needs Monitoring",
+      meaning: "This partner is okay but showing some warning signs. They might miss payments occasionally. Keep an eye on them."
+    };
+  } else if (score >= 350) {
+    return {
+      title: "⚠️ High Risk Zone",
+      meaning: "This partner is struggling. They're missing payments, cash is tight, and there's a real risk they won't be able to pay back loans."
+    };
+  } else {
+    return {
+      title: "🚨 Critical Risk",
+      meaning: "DANGER! This partner is in serious trouble. Multiple missed payments, no cash, and very likely to default. Consider stopping new loans."
+    };
+  }
+}
+
+function getRiskStatus(p) {
+  const score = p.trustScore;
+  if (score >= 700) return { label: "✅ SAFE", class: "safe" };
+  if (score >= 500) return { label: "⚠️ WATCH CLOSELY", class: "watch" };
+  if (score >= 350) return { label: "🚨 HIGH RISK", class: "danger" };
+  return { label: "🚨 CRITICAL", class: "danger" };
+}
+
+function getLoanStatusText(loan) {
+  if (loan.score >= 70) return "✅ Healthy";
+  if (loan.score >= 40) return "⚠️ Monitor";
+  return "🚨 At Risk";
+}
+
+function generateWhatHappening(p) {
+  const insights = [];
+  const avgScore = p.loanScores.reduce((s, l) => s + l.score, 0) / p.loanScores.length;
+  const criticalLoans = p.loanScores.filter(l => l.riskLevel === 'critical' || l.riskLevel === 'high').length;
+  const bfCount = (p.butterflyEffects || []).length;
+  
+  // Generate 3-5 simple insights
+  if (p.trustScore >= 600) {
+    insights.push({
+      icon: "📈",
+      type: "positive",
+      title: "Business is doing well",
+      desc: "Payments are coming in regularly and there's enough cash to cover obligations"
+    });
+  } else if (p.trustScore >= 400) {
+    insights.push({
+      icon: "💸",
+      type: "warning",
+      title: "Cash is getting tight",
+      desc: "Money coming in is barely covering the money going out. This needs attention."
+    });
+  } else {
+    insights.push({
+      icon: "⚠️",
+      type: "danger",
+      title: "Serious cash problems detected",
+      desc: "Not enough money to pay bills. Missing payments and penalties are piling up."
+    });
+  }
+  
+  if (criticalLoans > 0) {
+    insights.push({
+      icon: "🚨",
+      type: "danger",
+      title: `${criticalLoans} loan${criticalLoans > 1 ? 's are' : ' is'} in trouble`,
+      desc: "These loans are showing signs of default. Payments are delayed or missing entirely."
+    });
+  }
+  
+  if (bfCount > 0) {
+    insights.push({
+      icon: "🦋",
+      type: "warning",
+      title: "Small problems could become big ones",
+      desc: "We detected patterns where small issues (like a partial payment) could snowball into major problems."
+    });
+  }
+  
+  if (avgScore < 50 && p.loanScores.length > 1) {
+    insights.push({
+      icon: "📉",
+      type: "danger",
+      title: "Multiple loans are struggling at once",
+      desc: "When several loans go bad together, it usually means the business itself is in trouble, not just one loan."
+    });
+  }
+  
+  if (insights.length < 3) {
+    insights.push({
+      icon: "ℹ️",
+      type: "positive",
+      title: "Data looks normal",
+      desc: state.simpleMode ? 
+        "No major red flags detected in the financial patterns we're tracking." :
+        "No significant anomalies detected in behavioral or financial signal analysis."
+    });
+  }
+  
+  return insights.slice(0, 5);
+}
+
+function generateButterflyChain(p) {
+  // Generic butterfly chain if no specific data
+  const bf = p.butterflyEffects && p.butterflyEffects[0];
+  
+  if (bf && bf.chain && bf.chain.length > 0) {
+    return bf.chain.slice(0, 5).map((step, i) => ({
+      title: step,
+      desc: i === 0 ? "Initial trigger" : i === bf.chain.length - 1 ? "Final impact" : "Leads to..."
+    }));
+  }
+  
+  // Fallback generic chain
+  return [
+    { title: "Customer pays only half the EMI", desc: "Initial trigger — short on cash" },
+    { title: "Late payment penalty gets added", desc: "Penalty increases the amount owed" },
+    { title: "Next month's EMI is now higher", desc: "More money needed to catch up" },
+    { title: "Customer can't afford the increased amount", desc: "Creates a bigger problem" },
+    { title: "Risk of complete default increases", desc: "Could lead to loan write-off" }
+  ];
+}
+
+function generatePredictions(p) {
+  const predictions = [];
+  const avgScore = p.loanScores.reduce((s, l) => s + l.score, 0) / p.loanScores.length;
+  
+  if (avgScore < 40) {
+    predictions.push({
+      icon: "📉",
+      timeframe: "Next 30 Days",
+      text: "Likely to miss at least one EMI payment due to cash shortage"
+    });
+    predictions.push({
+      icon: "💰",
+      timeframe: "Next 60 Days",
+      text: "Cash flow may drop further, making recovery very difficult"
+    });
+  } else if (avgScore < 60) {
+    predictions.push({
+      icon: "⏰",
+      timeframe: "Next 30 Days",
+      text: "May experience payment delays of 5-10 days if cash stays tight"
+    });
+    predictions.push({
+      icon: "⚠️",
+      timeframe: "Next 60 Days",
+      text: "Risk of partial payments if business conditions don't improve"
+    });
+  } else {
+    predictions.push({
+      icon: "✅",
+      timeframe: "Next 30 Days",
+      text: "Likely to continue making on-time payments"
+    });
+    predictions.push({
+      icon: "📈",
+      timeframe: "Next 60 Days",
+      text: "Good chance of maintaining healthy payment behavior"
+    });
+  }
+  
+  return predictions;
+}
+
+function generateRecommendation(p) {
+  const score = p.trustScore;
+  
+  if (score >= 600) {
+    return `
+      <div class="recommendation-status safe">
+        <span>✅</span> Safe to Continue Lending
+      </div>
+      <div class="recommendation-action">
+        <div class="recommendation-action-title">Recommended Next Steps</div>
+        <ul class="recommendation-action-steps">
+          <li>Continue regular monitoring</li>
+          <li>Consider increasing lending limit</li>
+          <li>Maintain current collection schedule</li>
+        </ul>
+      </div>
+    `;
+  } else if (score >= 400) {
+    return `
+      <div class="recommendation-status monitor">
+        <span>⚠️</span> Monitor Closely
+      </div>
+      <div class="recommendation-action">
+        <div class="recommendation-action-title">Recommended Next Steps</div>
+        <ul class="recommendation-action-steps">
+          <li>Increase monitoring frequency to weekly</li>
+          <li>Hold off on new loans until situation improves</li>
+          <li>Consider reaching out to discuss payment plans</li>
+          <li>Set up automated alerts for missed payments</li>
+        </ul>
+      </div>
+    `;
+  } else {
+    return `
+      <div class="recommendation-status reduce">
+        <span>❌</span> Reduce Exposure
+      </div>
+      <div class="recommendation-action">
+        <div class="recommendation-action-title">Recommended Next Steps</div>
+        <ul class="recommendation-action-steps">
+          <li>Stop all new lending immediately</li>
+          <li>Initiate collection procedures on overdue amounts</li>
+          <li>Consider restructuring existing loans</li>
+          <li>Legal action may be necessary if default continues</li>
+        </ul>
+      </div>
+    `;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+//  Simulation Features
+// ─────────────────────────────────────────────────────────────────────────
+
+function renderSimulate(p) {
+  const main = document.getElementById('mainArea');
+  main.innerHTML = `
+    <div class="page-header">
+      <div class="page-title">🔮 Simulate Events</div>
+      <div class="page-sub">See how different events would impact the credit score in real-time</div>
+    </div>
+
+    <div class="simulation-panel">
+      <div class="section-title">What would happen if...</div>
+      <div class="simulation-input-group">
+        <input type="text" class="simulation-input" id="simEventInput" 
+          placeholder="E.g., Customer paid partial EMI of ₹5000">
+        <button class="simulation-btn" onclick="runSimulation()">▶ Simulate</button>
+      </div>
+      <div class="simulation-examples">
+        <div class="sim-example" onclick="setSimEvent('Customer paid partial EMI')">Customer paid partial EMI</div>
+        <div class="sim-example" onclick="setSimEvent('Customer spent ₹50,000')">Customer spent ₹50,000</div>
+        <div class="sim-example" onclick="setSimEvent('New loan taken for ₹100,000')">New loan taken</div>
+        <div class="sim-example" onclick="setSimEvent('Missed payment this month')">Missed payment</div>
+        <div class="sim-example" onclick="setSimEvent('GST filing delayed by 15 days')">GST delayed</div>
+      </div>
+      <div id="simResult"></div>
+    </div>
+
+    <!-- Current Portfolio State -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Current Portfolio State</div>
+        <div class="card-sub">Before simulation</div>
+      </div>
+      <div style="padding: 2rem;">
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; text-align: center;">
+          <div>
+            <div style="font-size: 2.5rem; font-weight: 900; color: var(--blue2);">${p.trustScore}</div>
+            <div style="font-size: 0.9rem; color: var(--gray600); margin-top: 0.5rem;">Trust Score</div>
+          </div>
+          <div>
+            <div style="font-size: 2.5rem; font-weight: 900; color: var(--green);">${p.loanScores.filter(l => l.score >= 60).length}</div>
+            <div style="font-size: 0.9rem; color: var(--gray600); margin-top: 0.5rem;">Healthy Loans</div>
+          </div>
+          <div>
+            <div style="font-size: 2.5rem; font-weight: 900; color: var(--red);">${p.loanScores.filter(l => l.score < 40).length}</div>
+            <div style="font-size: 0.9rem; color: var(--gray600); margin-top: 0.5rem;">At-Risk Loans</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function setSimEvent(text) {
+  document.getElementById('simEventInput').value = text;
+}
+
+function runSimulation() {
+  const input = document.getElementById('simEventInput').value;
+  if (!input.trim()) return;
+  
+  const resultDiv = document.getElementById('simResult');
+  const currentScore = state.partner.trustScore;
+  
+  // Simulate score change based on input
+  let newScore = currentScore;
+  let impact = "neutral";
+  let explanation = "";
+  
+  if (input.toLowerCase().includes('partial')) {
+    newScore = Math.max(0, currentScore - 15);
+    impact = "negative";
+    explanation = "Partial payments increase risk score. Shows cash flow problems.";
+  } else if (input.toLowerCase().includes('missed')) {
+    newScore = Math.max(0, currentScore - 25);
+    impact = "negative";
+    explanation = "Missed payments are serious red flags. Default risk increases significantly.";
+  } else if (input.toLowerCase().includes('paid') && input.toLowerCase().includes('full')) {
+    newScore = Math.min(850, currentScore + 10);
+    impact = "positive";
+    explanation = "Full on-time payments improve creditworthiness.";
+  } else if (input.toLowerCase().includes('spent') || input.toLowerCase().includes('₹')) {
+    const amount = input.match(/₹?([\d,]+)/)?.[1]?.replace(/,/g, '');
+    if (amount && parseInt(amount) > 40000) {
+      newScore = Math.max(0, currentScore - 8);
+      impact = "negative";
+      explanation = "Large expenses reduce available cash for EMI payments.";
+    }
+  } else if (input.toLowerCase().includes('loan taken')) {
+    newScore = Math.max(0, currentScore - 12);
+    impact = "negative";
+    explanation = "Taking new loans while existing ones are active increases debt burden.";
+  } else if (input.toLowerCase().includes('gst') && input.toLowerCase().includes('delay')) {
+    newScore = Math.max(0, currentScore - 10);
+    impact = "negative";
+    explanation = "GST delays often indicate business revenue problems.";
+  } else {
+    // Generic simulation
+    newScore = currentScore - 5;
+    impact = "negative";
+    explanation = "This event may negatively impact financial health.";
+  }
+  
+  resultDiv.innerHTML = `
+    <div class="simulation-result">
+      <div class="simulation-result-title">
+        <span>🎯</span> Simulation Result
+      </div>
+      <div class="simulation-score-change">
+        <div style="color: var(--blue2);">${currentScore}</div>
+        <div class="sim-arrow">→</div>
+        <div style="color: ${impact === 'positive' ? 'var(--green)' : 'var(--red)'};">${newScore}</div>
+        <div style="font-size: 1rem; color: ${impact === 'positive' ? 'var(--green)' : 'var(--red)'};">
+          (${newScore - currentScore > 0 ? '+' : ''}${newScore - currentScore})
+        </div>
+      </div>
+      <div style="margin-top: 1.5rem; padding: 1rem; background: var(--gray50); border-radius: 8px; font-size: 0.9rem; color: var(--gray700);">
+        💡 ${explanation}
+      </div>
+    </div>
+  `;
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+//  Message Processing
+// ─────────────────────────────────────────────────────────────────────────
+
+function processMessage() {
+  const input = document.getElementById('messageInput');
+  const message = input.value.trim();
+  if (!message) return;
+  
+  const updatesDiv = document.getElementById('messageUpdates');
+  
+  // Add the update
+  const updateHTML = `
+    <div class="message-update-item">
+      <strong>📱 Message received:</strong> "${message}"<br>
+      <span style="color: var(--blue2);">✓ Processing transaction...</span><br>
+      <span style="color: var(--green);">✓ Score updated! +5 points for on-time payment</span>
+    </div>
+  `;
+  
+  updatesDiv.innerHTML = updateHTML + updatesDiv.innerHTML;
+  
+  // Simulate score update
+  if (state.partner) {
+    state.partner.trustScore = Math.min(850, state.partner.trustScore + 5);
+    updateSidebar(state.partner);
+  }
+  
+  input.value = '';
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+//  Simple Mode Toggle
+// ─────────────────────────────────────────────────────────────────────────
+
+function toggleSimpleMode() {
+  state.simpleMode = !state.simpleMode;
+  const toggle = document.getElementById('simpleToggle');
+  toggle.classList.toggle('active');
+  
+  // Re-render to apply changes
+  if (state.partner) {
+    renderDashboard(state.partner);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────
 //  Init
 // ─────────────────────────────────────────────────────────────────────────
+state.simpleMode = false;
 checkApi();
 </script>
 </body>
