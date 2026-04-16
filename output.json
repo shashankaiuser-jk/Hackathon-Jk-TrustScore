@@ -1,0 +1,1233 @@
+{
+  "partnerId": "CP-RAJESH-001",
+  "trustScore": 289,
+  "grade": "D",
+  "riskLevel": "very_high",
+  "loanScores": [
+    {
+      "loanId": "LN-2023-001",
+      "score": 0,
+      "grade": "F",
+      "riskLevel": "critical",
+      "workflowResults": [
+        {
+          "workflowId": "WF-R01",
+          "name": "Partial Payment → GST → Liability Chain",
+          "category": "repayment",
+          "signal": "high_risk",
+          "scoreImpact": -14,
+          "confidence": 0.88,
+          "triggered": true,
+          "reason": "4 partial payments + GST trend -10.7% + DTI 1.80x — compounding liquidity squeeze.",
+          "butterflyEffect": "Partial EMIs → penalty accumulation → GST revenue decline → liability chain → cascading default risk.",
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-R02",
+          "name": "Delay Frequency → Cash Flow → Expense Pressure",
+          "category": "repayment",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "Delay frequency 28% within range.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-R03",
+          "name": "Missed EMI → SMS Pattern → Multi-Loan Stress",
+          "category": "repayment",
+          "signal": "high_risk",
+          "scoreImpact": -18,
+          "confidence": 0.92,
+          "triggered": true,
+          "reason": "1 missed EMI(s). SMS loan freq: 14/mo. Active loans: 3.",
+          "butterflyEffect": "Missed EMI → lender escalation → borrower stress → partial payments elsewhere → systemic portfolio risk.",
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-R04",
+          "name": "Frequent Delays → Industry Slowdown Correlation",
+          "category": "repayment",
+          "signal": "high_risk",
+          "scoreImpact": -11,
+          "confidence": 0.79,
+          "triggered": true,
+          "reason": "Systematic delays (avg 9 days) correlate with industry decline -2.1% — structural, not one-off.",
+          "butterflyEffect": "Industry contraction → revenue shortfall → systematic delays → sustained default trajectory.",
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-R05",
+          "name": "Recovery Signal: Improving Payment Trend",
+          "category": "repayment",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "Repayment trend not fully healthy.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-R06",
+          "name": "Penalty Escalation → Behavioral Anomaly",
+          "category": "repayment",
+          "signal": "high_risk",
+          "scoreImpact": -9,
+          "confidence": 0.73,
+          "triggered": true,
+          "reason": "10 penalty occurrences. Night txn ratio 0.18 — unusual fund movement pattern.",
+          "butterflyEffect": null,
+          "ahaInsight": "Penalty-heavy + night transactions = behavioural stress pattern linked to financial distress."
+        },
+        {
+          "workflowId": "WF-F01",
+          "name": "Sales Drop vs Peer Trend",
+          "category": "financial",
+          "signal": "medium_risk",
+          "scoreImpact": -7,
+          "confidence": 0.7,
+          "triggered": true,
+          "reason": "Sales -10.7% + weak peer performance 54/100 — market-wide pressure.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-F02",
+          "name": "High Purchase Ratio → Inventory Stress",
+          "category": "financial",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "P/S ratio normal.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-F03",
+          "name": "Cash Flow Volatility → Repayment Capacity",
+          "category": "financial",
+          "signal": "medium_risk",
+          "scoreImpact": -6,
+          "confidence": 0.68,
+          "triggered": true,
+          "reason": "High DTI 1.80x",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-F04",
+          "name": "Credit Utilization + Active Loans → Overleverage",
+          "category": "financial",
+          "signal": "high_risk",
+          "scoreImpact": -15,
+          "confidence": 0.87,
+          "triggered": true,
+          "reason": "Overleverage: util 78%, 3 active loans, 4 recent inquiries.",
+          "butterflyEffect": "Debt-seeking under leverage → new obligations → cascading default on existing loans.",
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-F05",
+          "name": "Balance Sheet Strength → Risk Cushion",
+          "category": "financial",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "Moderate BS 52/100.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-F06",
+          "name": "EPFO Decline → Business Contraction Signal",
+          "category": "financial",
+          "signal": "medium_risk",
+          "scoreImpact": -7,
+          "confidence": 0.74,
+          "triggered": true,
+          "reason": "EPFO headcount declining — business contraction or stress-driven workforce reduction.",
+          "butterflyEffect": null,
+          "ahaInsight": "EPFO data leads financial statement changes by 2-3 quarters. Headcount drop = earliest financial distress signal."
+        },
+        {
+          "workflowId": "WF-B01",
+          "name": "Sudden Expense Spike → Liquidity Risk",
+          "category": "behavioral",
+          "signal": "high_risk",
+          "scoreImpact": -13,
+          "confidence": 0.86,
+          "triggered": true,
+          "reason": "Expense spike. Balance: ₹45,000, I/O ratio: 0.91.",
+          "butterflyEffect": "Unexpected expense → balance depletion → EMI shortfall → missed payment → credit event.",
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-B02",
+          "name": "Multiple Bank Accounts → Fund Rotation Check",
+          "category": "behavioral",
+          "signal": "high_risk",
+          "scoreImpact": -11,
+          "confidence": 0.78,
+          "triggered": true,
+          "reason": "3 accounts + 9 cash withdrawals/mo.",
+          "butterflyEffect": null,
+          "ahaInsight": "Multi-account + high cash withdrawal = known pattern for masking real liquidity from lenders."
+        },
+        {
+          "workflowId": "WF-B03",
+          "name": "Gambling App Usage → Behavioral Risk Flag",
+          "category": "behavioral",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "No risky app usage.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-B04",
+          "name": "Inflow/Outflow Imbalance → Cash Crunch",
+          "category": "behavioral",
+          "signal": "high_risk",
+          "scoreImpact": -12,
+          "confidence": 0.82,
+          "triggered": true,
+          "reason": "I/O ratio 0.91 — spending > income. Balance ₹45,000 vs outstanding ₹820,000.",
+          "butterflyEffect": "Net outflows → shrinking liquidity → EMI failure risk in 30-60 days.",
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-B05",
+          "name": "UPI Growth + Finance App → Digital Health",
+          "category": "behavioral",
+          "signal": "medium_risk",
+          "scoreImpact": -6,
+          "confidence": 0.74,
+          "triggered": true,
+          "reason": "Failed txn rate 4.5% — liquidity friction signal.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-M01",
+          "name": "Single Bad Loan → Portfolio Contagion",
+          "category": "multi_loan",
+          "signal": "high_risk",
+          "scoreImpact": -14,
+          "confidence": 0.88,
+          "triggered": true,
+          "reason": "This loan's distress (1 missed, 4 partial) across 3 active loans = portfolio-level risk.",
+          "butterflyEffect": "One distressed loan → lender confidence drop → credit line restriction → all loans affected → borrower liquidity crisis.",
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-M02",
+          "name": "Loan Overlap → Liquidity Pressure Sim",
+          "category": "multi_loan",
+          "signal": "medium_risk",
+          "scoreImpact": -7,
+          "confidence": 0.81,
+          "triggered": true,
+          "reason": "3 active loans, 78% utilization. Monthly buffer: 11.3x EMI.",
+          "butterflyEffect": "Overlapping obligations → any CF disruption = simultaneous multi-loan default.",
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-M03",
+          "name": "Debt Stress Test: Total Obligation vs Revenue",
+          "category": "multi_loan",
+          "signal": "high_risk",
+          "scoreImpact": -14,
+          "confidence": 0.86,
+          "triggered": true,
+          "reason": "Coverage ratio only 0.6x — obligations near revenue ceiling.",
+          "butterflyEffect": "Near-zero coverage → any revenue dip = immediate default across all obligations.",
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-C01",
+          "name": "Industry Decline → Adjusted Risk Ceiling",
+          "category": "contextual",
+          "signal": "high_risk",
+          "scoreImpact": -10,
+          "confidence": 0.82,
+          "triggered": true,
+          "reason": "Industry growth -2.1%, sector risk 68/100 — structural headwinds.",
+          "butterflyEffect": "Industry contraction → sector-wide credit tightening → peer defaults → lender risk aversion.",
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-C02",
+          "name": "Peer Defaults → Systemic Risk Spread",
+          "category": "contextual",
+          "signal": "high_risk",
+          "scoreImpact": -9,
+          "confidence": 0.76,
+          "triggered": true,
+          "reason": "Peer score 54/100, market volatility 72/100 — systemic stress in borrower's network.",
+          "butterflyEffect": "Peer defaults → supply chain disruption → inventory build → cash flow stress.",
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-C03",
+          "name": "Government Policy + Commodity Impact",
+          "category": "contextual",
+          "signal": "medium_risk",
+          "scoreImpact": -8,
+          "confidence": 0.72,
+          "triggered": true,
+          "reason": "Neutral/negative policy + high commodity impact — margin compression risk.",
+          "butterflyEffect": "Rising input costs → margin squeeze → working capital shortage → delayed repayments.",
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-BE01",
+          "name": "Partial EMI → 90-Day Liquidity Stress Chain",
+          "category": "butterfly",
+          "signal": "medium_risk",
+          "scoreImpact": -9,
+          "confidence": 0.87,
+          "triggered": true,
+          "reason": "4 partials + ~281 days liquidity buffer at current burn rate.",
+          "butterflyEffect": "Partial EMIs → penalties ₹10,000 → credit score drop → lender review → line called → acute crisis.",
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-BE02",
+          "name": "Expense Spike → Repayment Failure Cascade",
+          "category": "butterfly",
+          "signal": "medium_risk",
+          "scoreImpact": -7,
+          "confidence": 0.84,
+          "triggered": true,
+          "reason": "Expense spike. EMI coverage: 11.3x (WARNING).",
+          "butterflyEffect": "Expense spike → balance ₹45,000 → EMI ₹120,000 → thin buffer → partial/missed payment.",
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-BE03",
+          "name": "New Loan Liability Chain",
+          "category": "butterfly",
+          "signal": "high_risk",
+          "scoreImpact": -12,
+          "confidence": 0.83,
+          "triggered": true,
+          "reason": "4 recent inquiries while current loan has 28% delay rate — debt-seeking under stress.",
+          "butterflyEffect": "Credit-seeking under stress → new loan → increased obligation → existing loan defaults → compounding insolvency.",
+          "ahaInsight": "Borrowers seeking new credit while existing loans are stressed have 3x higher default probability within 6 months."
+        },
+        {
+          "workflowId": "WF-BE04",
+          "name": "Supplier Concentration → Revenue Disruption",
+          "category": "butterfly",
+          "signal": "high_risk",
+          "scoreImpact": -11,
+          "confidence": 0.77,
+          "triggered": true,
+          "reason": "Supplier conc: 62%, Customer conc: 48% — single-point-of-failure risk.",
+          "butterflyEffect": "Concentrated supply/demand → any disruption = immediate revenue shock → cash collapse → loan default.",
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-CI01",
+          "name": "GST Drop + High Expenses = Double Stress",
+          "category": "combined",
+          "signal": "high_risk",
+          "scoreImpact": -16,
+          "confidence": 0.91,
+          "triggered": true,
+          "reason": "Double stress: GST declining -10.7% + elevated expenses — income contracting while costs expand.",
+          "butterflyEffect": "Revenue compression + cost expansion = negative working capital → repayment failure.",
+          "ahaInsight": "GST decline + expense spike combo is 5x more predictive of default than either signal alone."
+        },
+        {
+          "workflowId": "WF-CI02",
+          "name": "Good Repayment + Bad Industry = Resilient Operator",
+          "category": "combined",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "Repayment-industry combo neutral.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-CI03",
+          "name": "Poor Repayment + Strong Growth = Diversion Anomaly",
+          "category": "combined",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "No diversion anomaly detected.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-CI04",
+          "name": "High Inflow + No Repayment = Misuse Signal",
+          "category": "combined",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "No misuse pattern.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-A01",
+          "name": "Overall Trend Improving → Recovery Signal",
+          "category": "advanced",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "Insufficient recovery signals.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-A02",
+          "name": "Trend Worsening → Early Warning Trigger",
+          "category": "advanced",
+          "signal": "high_risk",
+          "scoreImpact": -13,
+          "confidence": 0.86,
+          "triggered": true,
+          "reason": "Multi-dimensional deterioration: 2/3 warning signals. Pre-default trajectory pattern.",
+          "butterflyEffect": "Converging deterioration → accelerating credit risk → recommend immediate borrower engagement.",
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-A03",
+          "name": "Behavioral Stability → Trust Amplifier",
+          "category": "advanced",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "Behaviour within normal range.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-A04",
+          "name": "Legal + Director Risk → Governance Flag",
+          "category": "advanced",
+          "signal": "medium_risk",
+          "scoreImpact": -7,
+          "confidence": 0.85,
+          "triggered": true,
+          "reason": "Governance risk: 1 legal case(s).",
+          "butterflyEffect": null,
+          "ahaInsight": "Legal + director risk flags have 4x correlation with default within 12 months."
+        }
+      ],
+      "parameters": {
+        "loan": {
+          "onTimePaymentRatio": 0.4444444444444444,
+          "delayFrequency": 0.2777777777777778,
+          "avgDelayDays": 9.363636363636363,
+          "partialPaymentCount": 4,
+          "missedPaymentCount": 1,
+          "loanTenureProgress": 0.75,
+          "emiAmountConsistency": 0.7467524884106455,
+          "penaltyOccurrences": 10,
+          "outstandingPrincipal": 820000,
+          "loanUtilizationRatio": 0.328,
+          "emiAmount": 120000,
+          "loanAmount": 2500000
+        },
+        "financial": {
+          "gstMonthlySales": 720000,
+          "gstFilingConsistency": 0.75,
+          "salesGrowthRate": -10.743801652892557,
+          "purchaseVsSalesRatio": 0.72,
+          "inputOutputMismatch": 8.5,
+          "cashFlowVolatility": 43690.435642903205,
+          "creditUtilization": 78,
+          "numberOfActiveLoans": 3,
+          "recentLoanInquiries": 4,
+          "debtToIncomeRatio": 1.8,
+          "legalCaseCount": 1,
+          "balanceSheetStrength": 52,
+          "profitMarginTrend": "stable",
+          "epfoEmployeeTrend": "declining",
+          "directorRiskSignals": false
+        },
+        "behavioral": {
+          "transactionVelocity": 8.2,
+          "avgDailyBalance": 45000,
+          "inflowOutflowRatio": 0.91,
+          "largeDebitFrequency": 6,
+          "loanSmsFrequency": 14,
+          "repaymentSmsSignals": 4,
+          "financeAppUsage": "high",
+          "gamblingAppUsage": false,
+          "expenseCategorization": {
+            "inventory": 55,
+            "operations": 18,
+            "personal": 15,
+            "loan_repayment": 12
+          },
+          "cashWithdrawalFrequency": 9,
+          "bankAccountCount": 3,
+          "upiTransactionTrend": "decreasing",
+          "failedTransactionRate": 4.5,
+          "nightTimeTransactionRatio": 0.18,
+          "suddenExpenseSpike": true
+        },
+        "contextual": {
+          "industryGrowthRate": -2.1,
+          "peerPerformanceScore": 54,
+          "localityBusinessDensity": "high",
+          "sectorRiskIndex": 68,
+          "governmentPolicyImpact": "neutral",
+          "commodityPriceImpact": "high",
+          "seasonalityImpact": "medium",
+          "supplierConcentration": 62,
+          "customerConcentration": 48,
+          "marketVolatilityIndex": 72
+        }
+      },
+      "topFactors": [
+        {
+          "factor": "Repayment Behavior",
+          "impact": "negative",
+          "weight": 0.44,
+          "description": "44% on-time, 1 missed, 4 partial EMIs."
+        },
+        {
+          "factor": "Financial Health",
+          "impact": "neutral",
+          "weight": 0.52,
+          "description": "BS 52/100, DTI 1.8x, GST trend -10.7%."
+        },
+        {
+          "factor": "Behavioral Signals",
+          "impact": "negative",
+          "weight": 0.91,
+          "description": "I/O ratio 0.91, balance ₹45,000, spike: YES."
+        },
+        {
+          "factor": "Industry Context",
+          "impact": "negative",
+          "weight": 0.21,
+          "description": "Industry growth -2.1%, sector risk 68/100."
+        },
+        {
+          "factor": "High-Risk Workflows Triggered",
+          "impact": "negative",
+          "weight": 0.46,
+          "description": "16 high-risk workflows: Partial Payment → GST → Liability Chain, Missed EMI → SMS Pattern → Multi-Loan Stress."
+        }
+      ],
+      "butterflyTriggers": [
+        {
+          "trigger": "Partial Payment → GST → Liability Chain",
+          "severity": "critical",
+          "chain": [
+            "Partial EMIs",
+            "penalty accumulation",
+            "GST revenue decline",
+            "liability chain",
+            "cascading default risk."
+          ],
+          "potentialImpact": "4 partial payments + GST trend -10.7% + DTI 1.80x — compounding liquidity squeeze."
+        },
+        {
+          "trigger": "Missed EMI → SMS Pattern → Multi-Loan Stress",
+          "severity": "critical",
+          "chain": [
+            "Missed EMI",
+            "lender escalation",
+            "borrower stress",
+            "partial payments elsewhere",
+            "systemic portfolio risk."
+          ],
+          "potentialImpact": "1 missed EMI(s). SMS loan freq: 14/mo. Active loans: 3."
+        },
+        {
+          "trigger": "Frequent Delays → Industry Slowdown Correlation",
+          "severity": "critical",
+          "chain": [
+            "Industry contraction",
+            "revenue shortfall",
+            "systematic delays",
+            "sustained default trajectory."
+          ],
+          "potentialImpact": "Systematic delays (avg 9 days) correlate with industry decline -2.1% — structural, not one-off."
+        },
+        {
+          "trigger": "Credit Utilization + Active Loans → Overleverage",
+          "severity": "critical",
+          "chain": [
+            "Debt-seeking under leverage",
+            "new obligations",
+            "cascading default on existing loans."
+          ],
+          "potentialImpact": "Overleverage: util 78%, 3 active loans, 4 recent inquiries."
+        },
+        {
+          "trigger": "Sudden Expense Spike → Liquidity Risk",
+          "severity": "critical",
+          "chain": [
+            "Unexpected expense",
+            "balance depletion",
+            "EMI shortfall",
+            "missed payment",
+            "credit event."
+          ],
+          "potentialImpact": "Expense spike. Balance: ₹45,000, I/O ratio: 0.91."
+        }
+      ],
+      "reasoning": "Loan health score of 0/100 reflects critical risk, primarily driven by Partial Payment → GST → Liability Chain — repayment discipline at 44% on-time with 1 missed and 4 partial payment(s). GST sales trend of -10.7% combined with daily balance of ₹45,000 and negative inflow/outflow ratio signal near-term liquidity pressure. Credit team should initiate immediate borrower review and consider security top-up.",
+      "workflowSummary": {
+        "total": 35,
+        "triggered": 25,
+        "highRisk": 16,
+        "positive": 0,
+        "scoreImpact": -65
+      },
+      "timestamp": "2026-04-15T21:22:41.049Z"
+    },
+    {
+      "loanId": "LN-2024-087",
+      "score": 100,
+      "grade": "A",
+      "riskLevel": "low",
+      "workflowResults": [
+        {
+          "workflowId": "WF-R01",
+          "name": "Partial Payment → GST → Liability Chain",
+          "category": "repayment",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "Partial payment count too low to trigger.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-R02",
+          "name": "Delay Frequency → Cash Flow → Expense Pressure",
+          "category": "repayment",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "Delay frequency 10% within range.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-R03",
+          "name": "Missed EMI → SMS Pattern → Multi-Loan Stress",
+          "category": "repayment",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "No missed EMIs.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-R04",
+          "name": "Frequent Delays → Industry Slowdown Correlation",
+          "category": "repayment",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "Delay-industry correlation not significant.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-R05",
+          "name": "Recovery Signal: Improving Payment Trend",
+          "category": "repayment",
+          "signal": "positive",
+          "scoreImpact": 10,
+          "confidence": 0.84,
+          "triggered": true,
+          "reason": "Strong discipline: 80% on-time, avg delay 3.0d, zero missed.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-R06",
+          "name": "Penalty Escalation → Behavioral Anomaly",
+          "category": "repayment",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "2 penalties — acceptable.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-F01",
+          "name": "Sales Drop vs Peer Trend",
+          "category": "financial",
+          "signal": "positive",
+          "scoreImpact": 6,
+          "confidence": 0.72,
+          "triggered": true,
+          "reason": "Sales at 17.1% — healthy trend.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-F02",
+          "name": "High Purchase Ratio → Inventory Stress",
+          "category": "financial",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "P/S ratio normal.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-F03",
+          "name": "Cash Flow Volatility → Repayment Capacity",
+          "category": "financial",
+          "signal": "neutral",
+          "scoreImpact": 3,
+          "confidence": 0.6,
+          "triggered": false,
+          "reason": "Cash flow stable, DTI manageable.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-F04",
+          "name": "Credit Utilization + Active Loans → Overleverage",
+          "category": "financial",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "Credit leverage acceptable.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-F05",
+          "name": "Balance Sheet Strength → Risk Cushion",
+          "category": "financial",
+          "signal": "positive",
+          "scoreImpact": 12,
+          "confidence": 0.84,
+          "triggered": true,
+          "reason": "BS 71/100 + improving margins — strong repayment cushion.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-F06",
+          "name": "EPFO Decline → Business Contraction Signal",
+          "category": "financial",
+          "signal": "positive",
+          "scoreImpact": 5,
+          "confidence": 0.72,
+          "triggered": true,
+          "reason": "Growing employee base — business expansion signal.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-B01",
+          "name": "Sudden Expense Spike → Liquidity Risk",
+          "category": "behavioral",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "No expense spike.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-B02",
+          "name": "Multiple Bank Accounts → Fund Rotation Check",
+          "category": "behavioral",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "Normal account structure.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-B03",
+          "name": "Gambling App Usage → Behavioral Risk Flag",
+          "category": "behavioral",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "No risky app usage.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-B04",
+          "name": "Inflow/Outflow Imbalance → Cash Crunch",
+          "category": "behavioral",
+          "signal": "positive",
+          "scoreImpact": 6,
+          "confidence": 0.72,
+          "triggered": true,
+          "reason": "Healthy I/O ratio 1.12.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-B05",
+          "name": "UPI Growth + Finance App → Digital Health",
+          "category": "behavioral",
+          "signal": "positive",
+          "scoreImpact": 8,
+          "confidence": 0.76,
+          "triggered": true,
+          "reason": "Growing UPI + strong finance app + low failures — strong digital financial hygiene.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-M01",
+          "name": "Single Bad Loan → Portfolio Contagion",
+          "category": "multi_loan",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "No portfolio contagion risk.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-M02",
+          "name": "Loan Overlap → Liquidity Pressure Sim",
+          "category": "multi_loan",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "Loan overlap manageable.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-M03",
+          "name": "Debt Stress Test: Total Obligation vs Revenue",
+          "category": "multi_loan",
+          "signal": "high_risk",
+          "scoreImpact": -14,
+          "confidence": 0.86,
+          "triggered": true,
+          "reason": "Coverage ratio only 0.9x — obligations near revenue ceiling.",
+          "butterflyEffect": "Near-zero coverage → any revenue dip = immediate default across all obligations.",
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-C01",
+          "name": "Industry Decline → Adjusted Risk Ceiling",
+          "category": "contextual",
+          "signal": "positive",
+          "scoreImpact": 8,
+          "confidence": 0.78,
+          "triggered": true,
+          "reason": "Strong industry tailwind at 7.8%.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-C02",
+          "name": "Peer Defaults → Systemic Risk Spread",
+          "category": "contextual",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "Peer performance healthy.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-C03",
+          "name": "Government Policy + Commodity Impact",
+          "category": "contextual",
+          "signal": "positive",
+          "scoreImpact": 7,
+          "confidence": 0.74,
+          "triggered": true,
+          "reason": "Favourable policy + manageable commodity prices — regulatory tailwind.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-BE01",
+          "name": "Partial EMI → 90-Day Liquidity Stress Chain",
+          "category": "butterfly",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "Insufficient partials to trigger butterfly.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-BE02",
+          "name": "Expense Spike → Repayment Failure Cascade",
+          "category": "butterfly",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "No expense spike.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-BE03",
+          "name": "New Loan Liability Chain",
+          "category": "butterfly",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "No new liability chain risk.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-BE04",
+          "name": "Supplier Concentration → Revenue Disruption",
+          "category": "butterfly",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "Supply/customer chain diversified.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-CI01",
+          "name": "GST Drop + High Expenses = Double Stress",
+          "category": "combined",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "No combined GST-expense signal.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-CI02",
+          "name": "Good Repayment + Bad Industry = Resilient Operator",
+          "category": "combined",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "Repayment-industry combo neutral.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-CI03",
+          "name": "Poor Repayment + Strong Growth = Diversion Anomaly",
+          "category": "combined",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "No diversion anomaly detected.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-CI04",
+          "name": "High Inflow + No Repayment = Misuse Signal",
+          "category": "combined",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "No misuse pattern.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-A01",
+          "name": "Overall Trend Improving → Recovery Signal",
+          "category": "advanced",
+          "signal": "positive",
+          "scoreImpact": 9,
+          "confidence": 0.8,
+          "triggered": true,
+          "reason": "Recovery trend: 2/3 positive signals — repayment, revenue, balance all moving right.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-A02",
+          "name": "Trend Worsening → Early Warning Trigger",
+          "category": "advanced",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "No convergent worsening trend.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-A03",
+          "name": "Behavioral Stability → Trust Amplifier",
+          "category": "advanced",
+          "signal": "neutral",
+          "scoreImpact": 0,
+          "confidence": 0.3,
+          "triggered": false,
+          "reason": "Behaviour within normal range.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        },
+        {
+          "workflowId": "WF-A04",
+          "name": "Legal + Director Risk → Governance Flag",
+          "category": "advanced",
+          "signal": "positive",
+          "scoreImpact": 4,
+          "confidence": 0.72,
+          "triggered": true,
+          "reason": "Clean governance — no legal cases or director concerns.",
+          "butterflyEffect": null,
+          "ahaInsight": null
+        }
+      ],
+      "parameters": {
+        "loan": {
+          "onTimePaymentRatio": 0.8,
+          "delayFrequency": 0.1,
+          "avgDelayDays": 3,
+          "partialPaymentCount": 1,
+          "missedPaymentCount": 0,
+          "loanTenureProgress": 0.5555555555555556,
+          "emiAmountConsistency": 0.9526315789473684,
+          "penaltyOccurrences": 2,
+          "outstandingPrincipal": 620000,
+          "loanUtilizationRatio": 0.41333333333333333,
+          "emiAmount": 95000,
+          "loanAmount": 1500000
+        },
+        "financial": {
+          "gstMonthlySales": 1300000,
+          "gstFilingConsistency": 0.9166666666666666,
+          "salesGrowthRate": 17.117117117117118,
+          "purchaseVsSalesRatio": 0.68,
+          "inputOutputMismatch": 3.2,
+          "cashFlowVolatility": 72226.49560006817,
+          "creditUtilization": 55,
+          "numberOfActiveLoans": 2,
+          "recentLoanInquiries": 1,
+          "debtToIncomeRatio": 1.1,
+          "legalCaseCount": 0,
+          "balanceSheetStrength": 71,
+          "profitMarginTrend": "improving",
+          "epfoEmployeeTrend": "growing",
+          "directorRiskSignals": false
+        },
+        "behavioral": {
+          "transactionVelocity": 15.4,
+          "avgDailyBalance": 120000,
+          "inflowOutflowRatio": 1.12,
+          "largeDebitFrequency": 3,
+          "loanSmsFrequency": 6,
+          "repaymentSmsSignals": 9,
+          "financeAppUsage": "medium",
+          "gamblingAppUsage": false,
+          "expenseCategorization": {
+            "inventory": 65,
+            "operations": 14,
+            "personal": 10,
+            "loan_repayment": 11
+          },
+          "cashWithdrawalFrequency": 4,
+          "bankAccountCount": 2,
+          "upiTransactionTrend": "increasing",
+          "failedTransactionRate": 1.2,
+          "nightTimeTransactionRatio": 0.07,
+          "suddenExpenseSpike": false
+        },
+        "contextual": {
+          "industryGrowthRate": 7.8,
+          "peerPerformanceScore": 76,
+          "localityBusinessDensity": "high",
+          "sectorRiskIndex": 32,
+          "governmentPolicyImpact": "positive",
+          "commodityPriceImpact": "low",
+          "seasonalityImpact": "low",
+          "supplierConcentration": 38,
+          "customerConcentration": 29,
+          "marketVolatilityIndex": 28
+        }
+      },
+      "topFactors": [
+        {
+          "factor": "Repayment Behavior",
+          "impact": "positive",
+          "weight": 0.8,
+          "description": "80% on-time, 0 missed, 1 partial EMIs."
+        },
+        {
+          "factor": "Financial Health",
+          "impact": "positive",
+          "weight": 0.71,
+          "description": "BS 71/100, DTI 1.1x, GST trend 17.1%."
+        },
+        {
+          "factor": "Behavioral Signals",
+          "impact": "positive",
+          "weight": 1.12,
+          "description": "I/O ratio 1.12, balance ₹120,000, spike: no."
+        },
+        {
+          "factor": "Industry Context",
+          "impact": "positive",
+          "weight": 0.78,
+          "description": "Industry growth 7.8%, sector risk 32/100."
+        },
+        {
+          "factor": "High-Risk Workflows Triggered",
+          "impact": "negative",
+          "weight": 0.03,
+          "description": "1 high-risk workflows: Debt Stress Test: Total Obligation vs Revenue."
+        }
+      ],
+      "butterflyTriggers": [
+        {
+          "trigger": "Debt Stress Test: Total Obligation vs Revenue",
+          "severity": "critical",
+          "chain": [
+            "Near-zero coverage",
+            "any revenue dip = immediate default across all obligations."
+          ],
+          "potentialImpact": "Coverage ratio only 0.9x — obligations near revenue ceiling."
+        }
+      ],
+      "reasoning": "Loan health score of 100/100 reflects manageable risk, primarily driven by Debt Stress Test: Total Obligation vs Revenue — repayment discipline at 80% on-time with 0 missed and 1 partial payment(s). GST sales trend of 17.1% combined with daily balance of ₹120,000 indicate the borrower retains some operational capacity. Credit team should maintain standard monitoring cadence with quarterly review.",
+      "workflowSummary": {
+        "total": 35,
+        "triggered": 11,
+        "highRisk": 1,
+        "positive": 10,
+        "scoreImpact": 45
+      },
+      "timestamp": "2026-04-15T21:22:41.051Z"
+    }
+  ],
+  "scoreBreakdown": {
+    "loanHealthContribution": 102,
+    "financialContribution": 95,
+    "behavioralContribution": 60,
+    "contextualContribution": 32,
+    "weights": {
+      "loanHealth": 0.6,
+      "financial": 0.2,
+      "behavioral": 0.12,
+      "contextual": 0.08
+    }
+  },
+  "topInsights": [
+    "Trust score of 255/850 is critically impacted by 1 distressed loan(s) with scores below 50.",
+    "Industry contraction of 2.1% is a structural headwind, not a temporary blip — peer default rate of 54/100 confirms sector-wide stress.",
+    "Recommend credit review with collateral assessment and 15-day monitoring cadence."
+  ],
+  "butterflyEffects": [
+    {
+      "trigger": "Partial Payment → GST → Liability Chain",
+      "severity": "critical",
+      "chain": [
+        "Partial EMIs",
+        "penalty accumulation",
+        "GST revenue decline",
+        "liability chain",
+        "cascading default risk."
+      ],
+      "potentialImpact": "4 partial payments + GST trend -10.7% + DTI 1.80x — compounding liquidity squeeze."
+    },
+    {
+      "trigger": "Missed EMI → SMS Pattern → Multi-Loan Stress",
+      "severity": "critical",
+      "chain": [
+        "Missed EMI",
+        "lender escalation",
+        "borrower stress",
+        "partial payments elsewhere",
+        "systemic portfolio risk."
+      ],
+      "potentialImpact": "1 missed EMI(s). SMS loan freq: 14/mo. Active loans: 3."
+    },
+    {
+      "trigger": "Frequent Delays → Industry Slowdown Correlation",
+      "severity": "critical",
+      "chain": [
+        "Industry contraction",
+        "revenue shortfall",
+        "systematic delays",
+        "sustained default trajectory."
+      ],
+      "potentialImpact": "Systematic delays (avg 9 days) correlate with industry decline -2.1% — structural, not one-off."
+    },
+    {
+      "trigger": "Credit Utilization + Active Loans → Overleverage",
+      "severity": "critical",
+      "chain": [
+        "Debt-seeking under leverage",
+        "new obligations",
+        "cascading default on existing loans."
+      ],
+      "potentialImpact": "Overleverage: util 78%, 3 active loans, 4 recent inquiries."
+    },
+    {
+      "trigger": "Sudden Expense Spike → Liquidity Risk",
+      "severity": "critical",
+      "chain": [
+        "Unexpected expense",
+        "balance depletion",
+        "EMI shortfall",
+        "missed payment",
+        "credit event."
+      ],
+      "potentialImpact": "Expense spike. Balance: ₹45,000, I/O ratio: 0.91."
+    }
+  ],
+  "ahaMoments": [
+    "Penalty-heavy + night transactions = behavioural stress pattern linked to financial distress.",
+    "EPFO data leads financial statement changes by 2-3 quarters. Headcount drop = earliest financial distress signal.",
+    "Multi-account + high cash withdrawal = known pattern for masking real liquidity from lenders."
+  ],
+  "fullReasoning": "Channel partner this partner carries 3 active loan(s) with a high concentration of distress signals. Financial health is under stress at balance sheet score 52/100, against a high-risk industry backdrop (sector risk 68/100). Digitap behavioral data flags a sudden expense event and net cash outflows — a liquidity warning. Overall classification: High risk — immediate credit review recommended.",
+  "timestamp": "2026-04-15T21:22:41.051Z"
+}
