@@ -51,7 +51,7 @@ const server = http.createServer(async (req, res) => {
 
   // ── Serve static UI ───────────────────────────────────────────────────
   if (!url.startsWith('/api')) {
-    const filePath = path.join(PUBLIC, url === '/' ? 'index.html' : url);
+    const filePath = path.join(PUBLIC, url === '/' ? 'landing.html' : url);
     const ext      = path.extname(filePath);
     try {
       const content = fs.readFileSync(filePath);
