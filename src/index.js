@@ -17,7 +17,7 @@ try {
 const { handleRequest } = require('./api/routes');
 
 const PORT    = process.env.PORT || 3000;
-const PUBLIC  = path.join(__dirname, '../public');
+const PUBLIC  = path.join(__dirname, '../docs');
 
 // ── MIME types ─────────────────────────────────────────────────────────────
 const MIME = {
@@ -40,7 +40,7 @@ function readBody(req) {
 }
 
 // ── Server ─────────────────────────────────────────────────────────────────
-const server = http.createServer(async (req, res) => {
+const requestHandler = async (req, res) => {
   const url = req.url.split('?')[0];
 
   // CORS
@@ -73,10 +73,13 @@ const server = http.createServer(async (req, res) => {
     res.writeHead(500, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ success:false, error: e.message }));
   }
-});
+};
 
-server.listen(PORT, () => {
-  console.log(`
+const server = http.createServer(requestHandler);
+
+if (!process.env.VERCEL) {
+  server.listen(PORT, () => {
+    console.log(`
 ╔══════════════════════════════════════════════════════════════╗
 ║          CreditLens AI  —  Credit Intelligence v2.0          ║
 ╠══════════════════════════════════════════════════════════════╣
@@ -86,5 +89,8 @@ server.listen(PORT, () => {
 ╚══════════════════════════════════════════════════════════════╝
 
   API key: ${process.env.ANTHROPIC_API_KEY ? '✓ Found' : '✗ Not set — fallback reasoning active'}
-  `);
-});
+    `);
+  });
+}
+
+module.exports = requestHandler;
