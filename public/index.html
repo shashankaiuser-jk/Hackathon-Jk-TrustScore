@@ -27,7 +27,7 @@ body{font-family:'SF Pro Display',-apple-system,BlinkMacSystemFont,'Segoe UI',sa
   display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:50;}
 .sidebar-logo{padding:1.5rem 1.25rem;display:flex;align-items:center;gap:.75rem;
   border-bottom:1px solid rgba(255,255,255,.08);}
-.sidebar-logo-icon{width:36px;height:36px;background:var(--green);border-radius:10px;
+.sidebar-logo-icon{height:45px;width:200px;max-width:100%;background:none;border-radius:4px;
   display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
 .sidebar-logo-text{font-size:1rem;font-weight:800;color:#fff;}
 .sidebar-logo-text span{font-size:.7rem;color:rgba(255,255,255,.4);display:block;font-weight:400;}
@@ -293,9 +293,9 @@ tbody tr:hover{background:var(--light);}
 
 <!-- SIDEBAR -->
 <aside class="sidebar">
-  <div class="sidebar-logo">
-    <div class="sidebar-logo-icon" style="font-size:.75rem;letter-spacing:-.5px;">CL</div>
-    <div class="sidebar-logo-text">CreditLens AI<span>Intelligence v2.0</span></div>
+  <div class="sidebar-logo" style="cursor:pointer;" onclick="location.reload()">
+    <img src="CREDLENSLOGO.jpeg" class="sidebar-logo-icon" style="border:none;object-fit:contain; transform: scale(2.7);border-radius:4px;" alt="Logo" />
+    <div class="sidebar-logo-text" style="text-transform:uppercase;letter-spacing:1px;font-weight:900;"><span></span></div>
   </div>
   <nav class="sidebar-nav">
     <div class="sidebar-section">Overview</div>
@@ -369,7 +369,7 @@ tbody tr:hover{background:var(--light);}
   <div class="chat-popup" id="chatPopup">
     <div class="chat-head">
       <div>
-        <div class="chat-head-title">CreditLens Assistant</div>
+        <div class="chat-head-title">🚜 Bulldozer Baba AI</div>
         <div class="chat-head-sub">Ask me anything about your portfolio</div>
       </div>
       <button class="chat-close-btn" onclick="toggleChat()">✕</button>
@@ -381,7 +381,7 @@ tbody tr:hover{background:var(--light);}
       <div class="chip" onclick="askChat('How many loans are at risk?')">Loans at risk?</div>
     </div>
     <div class="chat-messages" id="chatMessages">
-      <div class="chat-msg bot">Hello. I'm your CreditLens AI assistant. I can explain scores, flag risks, and answer questions about your portfolio. What would you like to know?</div>
+      <div class="chat-msg bot">Hello. I'm 🚜 Bulldozer Baba AI. I can explain scores, flag risks, and answer questions about your portfolio. What would you like to know?</div>
     </div>
     <div class="chat-input-row">
       <input class="chat-input" id="chatInput" placeholder="Ask a question..." 
@@ -389,7 +389,9 @@ tbody tr:hover{background:var(--light);}
       <button class="chat-send" onclick="sendChat()">▶</button>
     </div>
   </div>
-  <button class="chat-btn" onclick="toggleChat()" title="AI Assistant" style="font-size:.72rem;font-weight:800;letter-spacing:-.3px;">AI</button>
+  <button class="chat-btn" onclick="toggleChat()" title="AI Assistant" style="padding:0;overflow:hidden;border:2px solid var(--green);">
+    <img src="babalogo.png" alt="AI" style="width:100%;height:100%;object-fit:cover;display:block;" />
+  </button>
 </div>
 
 <script>
@@ -516,22 +518,22 @@ function renderDashboard() {
     <!-- Onboarding Bar -->
     <div class="onboarding-bar">
       <div class="ob-item">
-        <div class="ob-val">${partners.filter(p=>p.kycStatus==='completed').length}</div>
-        <div class="ob-lbl">KYC Completed</div>
-        <div class="ob-sub">Channel partners</div>
+        <div class="ob-val" style="color:#dcfce7">${partners.filter(p=>p.trustScore>=700).length}</div>
+        <div class="ob-lbl">Positive Partners</div>
+        <div class="ob-sub">Low default probability</div>
       </div>
       <div class="ob-item">
-        <div class="ob-val">${partners.filter(p=>p.credCheckStatus==='pending').length}</div>
-        <div class="ob-lbl">Pending CredCheck</div>
-        <div class="ob-sub">Awaiting analysis</div>
+        <div class="ob-val" style="color:#bae6fd">${partners.filter(p=>p.trustScore>=500 && p.trustScore<700).length}</div>
+        <div class="ob-lbl">Stable Partners</div>
+        <div class="ob-sub">Standard monitoring</div>
       </div>
       <div class="ob-item">
-        <div class="ob-val">${critPartners.length}</div>
+        <div class="ob-val" style="color:#fecaca">${critPartners.length}</div>
         <div class="ob-lbl">High Risk Partners</div>
         <div class="ob-sub">Immediate attention</div>
       </div>
       <div class="ob-item">
-        <div class="ob-val">${watchPartners.length}</div>
+        <div class="ob-val" style="color:#fef08a">${watchPartners.length}</div>
         <div class="ob-lbl">Watch List</div>
         <div class="ob-sub">Monitor closely</div>
       </div>
@@ -598,7 +600,7 @@ function renderPartners() {
         <thead><tr>
           <th>Partner</th><th>Company</th><th>Trust Score</th>
           <th>Grade</th><th>Risk Level</th><th>Loans</th>
-          <th>KYC</th><th>Actions</th>
+          <th>Actions</th>
         </tr></thead>
         <tbody>
           ${partners.map(p => partnerRowHTML(p, true)).join('')}
@@ -638,23 +640,23 @@ function partnerRowHTML(p, showKyc=false) {
     </td>
     <td style="color:var(--muted);font-size:.85rem;">${p.company}</td>
     <td>
-      <div style="font-size:1.1rem;font-weight:900;color:${riskColors[p.riskLevel]||'#374151'}">
-        ${p.trustScore}
+      <div style="font-size:1.1rem;font-weight:900;color:${p.scored ? riskColors[p.riskLevel]||'#374151' : 'var(--muted)'}">
+        ${p.scored ? p.trustScore : '—'}
       </div>
-      <div style="font-size:.68rem;color:var(--muted);">/ 850</div>
+      <div style="font-size:.68rem;color:var(--muted);">${p.scored ? '/ 850' : 'Not Yet Generated'}</div>
     </td>
-    <td><span class="badge ${gradeClass[p.grade]||'badge-gray'}">${p.grade}</span></td>
+    <td><span class="badge ${p.scored ? gradeClass[p.grade]||'badge-gray' : 'badge-gray'}">${p.scored ? p.grade : '—'}</span></td>
     <td>
       <div class="risk-bar-wrap">
-        <div class="risk-bar"><div class="risk-fill" style="width:${riskPct[p.riskLevel]||50}%;background:${riskColors[p.riskLevel]||'#9CA3AF'};"></div></div>
-        <span style="font-size:.75rem;color:${riskColors[p.riskLevel]||'#374151'}">${p.riskLevel?.replace('_',' ')}</span>
+        <div class="risk-bar"><div class="risk-fill" style="width:${p.scored ? riskPct[p.riskLevel]||50 : 0}%;background:${p.scored ? riskColors[p.riskLevel]||'#9CA3AF' : 'transparent'};"></div></div>
+        <span style="font-size:.75rem;color:${p.scored ? riskColors[p.riskLevel]||'#374151' : 'var(--muted)'}">${p.scored ? p.riskLevel?.replace('_',' ') : '—'}</span>
       </div>
     </td>
     <td>
       <div style="font-weight:700;">${p.loanCount}</div>
       <div style="font-size:.72rem;color:var(--muted);">${(p.loanIds||[]).slice(0,2).join(', ')}${p.loanIds?.length>2?' +...':''}</div>
     </td>
-    ${showKyc ? `<td>${kycBadge}</td>` : ''}
+    
     <td>
       <div style="display:flex;gap:.4rem;flex-wrap:wrap;">
         <button class="btn btn-primary btn-sm" id="phc-${p.partnerId}" onclick="runPartnerHealthCheck('${p.partnerId}')">
@@ -700,7 +702,9 @@ function loanRowHTML(l, fullRow=false) {
   const riskColors = {very_low:'#16A34A',low:'#22C55E',medium:'#F59E0B',high:'#EA580C',very_high:'#DC2626'};
   const riskPct    = {very_low:12,low:25,medium:50,high:74,very_high:94};
   const loanTypeFmt = {working_capital:'WC Loan',term_loan:'Term Loan',project_finance:'Project Finance'};
-  const badge = `<span class="score-pill ${scoreCls}">${l.score}<span style="font-size:.68rem;opacity:.7;">/100</span> · ${l.grade}</span>`;
+  const badge = l.scored 
+    ? `<span class="score-pill ${scoreCls}">${l.score}<span style="font-size:.68rem;opacity:.7;">/100</span> · ${l.grade}</span>` 
+    : `<span class="score-pill" style="background:rgba(0,0,0,0.06);color:var(--muted);">— / Not Yet Generated</span>`;
   return `<tr>
     <td style="font-weight:700;font-family:monospace;font-size:.85rem;">${l.loanId}</td>
     <td style="font-size:.85rem;color:var(--muted);">${l.partnerName||l.partnerId}</td>
@@ -711,8 +715,8 @@ function loanRowHTML(l, fullRow=false) {
     <td style="font-size:.85rem;font-weight:700;">₹${(l.outstandingPrincipal/100000).toFixed(1)}L</td>
     <td>
       <div class="risk-bar-wrap">
-        <div class="risk-bar"><div class="risk-fill" style="width:${riskPct[l.riskLevel]||50}%;background:${riskColors[l.riskLevel]||'#9CA3AF'};"></div></div>
-        <span style="font-size:.73rem;color:${riskColors[l.riskLevel]||'#374151'}">${l.riskLevel?.replace(/_/g,' ')}</span>
+        <div class="risk-bar"><div class="risk-fill" style="width:${l.scored ? riskPct[l.riskLevel]||50 : 0}%;background:${l.scored ? riskColors[l.riskLevel]||'#9CA3AF' : 'transparent'};"></div></div>
+        <span style="font-size:.73rem;color:${l.scored ? riskColors[l.riskLevel]||'#374151' : 'var(--muted)'}">${l.scored ? l.riskLevel?.replace(/_/g,' ') : '—'}</span>
       </div>
     </td>
     <td>
@@ -825,12 +829,14 @@ async function runLoanHealthCheck(loanId) {
     'Generating AI reasoning...',
   ]);
   try {
+    await new Promise(r => setTimeout(r, 5000));
     const result = await api('POST', '/loan/health-check', { loanId });
     // Update state
     const idx = state.loans.findIndex(l => l.loanId === loanId);
     if (idx !== -1) Object.assign(state.loans[idx], {
       score: result.score, grade: result.grade, riskLevel: result.riskLevel, scored: true,
     });
+    renderSection(state.section);
     showResultModal(result);
   } catch(e) {
     closeModal();
@@ -852,6 +858,7 @@ async function runPartnerHealthCheck(partnerId) {
     'Generating AI insights...',
   ]);
   try {
+    await new Promise(r => setTimeout(r, 5000));
     const result = await api('POST', '/partner/health-check', { partnerId });
     // Update state
     const idx = state.partners.findIndex(p => p.partnerId === partnerId);
@@ -862,6 +869,7 @@ async function runPartnerHealthCheck(partnerId) {
       const li = state.loans.findIndex(l => l.loanId === ls.loanId);
       if (li !== -1) Object.assign(state.loans[li], { score:ls.score, grade:ls.grade, riskLevel:ls.riskLevel, scored:true });
     });
+    renderSection(state.section);
     showPartnerResultModal(result);
   } catch(e) {
     closeModal();
@@ -874,27 +882,28 @@ async function runPartnerHealthCheck(partnerId) {
 function showLoadingModal(title, id, steps) {
   const overlay = document.getElementById('healthModal');
   overlay.classList.add('show');
-  let stepIdx = 0;
-  const renderSteps = () => steps.map((s,i) => `
-    <div class="lstep ${i<stepIdx?'done':i===stepIdx?'active':'wait'}">
-      <div class="lstep-dot">${i<stepIdx?'✓':i===stepIdx?'…':'○'}</div>
-      ${s}
-    </div>`).join('');
+  
+  const waitText = title.toLowerCase().includes('loan') 
+    ? "Fetching loan health insights..." 
+    : "Do you want to know your channel partner's trust score?";
 
   document.getElementById('modalContent').innerHTML = `
-    <div class="loading-state">
-      <div class="spinner-big"></div>
-      <div style="font-size:1rem;font-weight:700;margin-bottom:.35rem;">${title}</div>
-      <div style="font-size:.82rem;color:var(--muted);margin-bottom:1.5rem;">${id}</div>
-      <div class="loading-steps" id="loadingSteps">${renderSteps()}</div>
+    <div class="loading-state" style="text-align:center; padding:2rem; display:flex; flex-direction:column; align-items:center;">
+      <img src="Arnab.jpg" alt="Loader Head" style="width:400px;height:auto;border-radius:12px;object-fit:cover;margin-bottom:1.5rem;border:6px solid var(--green);box-shadow:0 10px 25px rgba(0,0,0,0.5);" />
+      <div style="font-size:1.15rem;font-weight:800;color:var(--text);margin-bottom:1.5rem;line-height:1.4;">
+        ${waitText}
+      </div>
+      <div class="spinner-big" style="margin-bottom:1.5rem; border: 4px solid rgba(22, 163, 74, 0.2); border-left-color: var(--green); width: 40px; height: 40px; border-radius: 50%; animation: spin 1s linear infinite;"></div>
     </div>`;
+}
 
-  const interval = setInterval(() => {
-    stepIdx = Math.min(stepIdx+1, steps.length-1);
-    const el = document.getElementById('loadingSteps');
-    if (el) el.innerHTML = renderSteps();
-  }, 600);
-  overlay._interval = interval;
+function formatBullets(text) {
+  if (!text) return '';
+  return '<ul style="margin:0;padding:0;list-style-type:disc;padding-left:1.2rem;">' + text.split(/(?:\. )|(?:\n)/)
+    .map(s => s.trim().replace(/\.$/, ''))
+    .filter(s => s.length > 5)
+    .map(s => `<li style="margin-bottom:.45rem;">${s}</li>`)
+    .join('') + '</ul>';
 }
 
 function showResultModal(result) {
@@ -904,7 +913,7 @@ function showResultModal(result) {
   const scoreColor = result.score>=80?'var(--green)':result.score>=60?'var(--blue2)':result.score>=40?'var(--gold)':'var(--red)';
   const factors    = result.topFactors || [];
   const bf         = result.butterflyTriggers || [];
-  const triggered  = (result.workflowResults||[]).filter(w=>w.triggered);
+  const triggered  = (result.workflowResults||[]).filter(w=>w.triggered && ['repayment','multi_loan','butterfly'].includes(w.category) && w.workflowId !== 'WF-R05');
   const negFactors = factors.filter(f=>f.impact==='negative').slice(0,3);
 
   // Business verdict
@@ -979,22 +988,6 @@ function showResultModal(result) {
       <div style="font-size:.8rem;color:var(--muted);">${verdictAction}</div>
     </div>
 
-    ${patterns.length>0?`
-    <!-- B. Key Patterns Detected -->
-    <div style="margin-bottom:1.25rem;">
-      <div style="font-size:.65rem;font-weight:800;color:var(--muted);letter-spacing:.08em;margin-bottom:.45rem;">KEY PATTERNS DETECTED</div>
-      <div style="display:flex;flex-wrap:wrap;gap:.35rem;">
-        ${patterns.map(p=>`<span style="background:var(--blue-light);color:var(--blue2);border:1px solid rgba(59,130,246,.2);padding:.22rem .6rem;border-radius:6px;font-size:.74rem;font-weight:600;">${p}</span>`).join('')}
-      </div>
-    </div>`:''}
-
-    ${wfChains?`
-    <!-- C. Workflows Triggered (Agent Logic) -->
-    <div style="margin-bottom:1.25rem;">
-      <div style="font-size:.65rem;font-weight:800;color:var(--muted);letter-spacing:.08em;margin-bottom:.45rem;">AGENT WORKFLOW LOGIC</div>
-      ${wfChains}
-    </div>`:''}
-
     ${negFactors.length>0?`
     <!-- E. Top Risk Drivers -->
     <div style="margin-bottom:1.25rem;">
@@ -1012,12 +1005,11 @@ function showResultModal(result) {
     ${result.reasoning?`
     <!-- D. Why This Score? -->
     <div style="margin-bottom:1.25rem;">
-      <div style="font-size:.65rem;font-weight:800;color:var(--muted);letter-spacing:.08em;margin-bottom:.45rem;">WHY THIS SCORE?</div>
-      <div class="reasoning-box">${result.reasoning}</div>
+      <div style="font-size:.65rem;font-weight:800;color:var(--muted);letter-spacing:.08em;margin-bottom:.45rem;">BASIC INSIGHTS / REASONING</div>
+      <div class="reasoning-box">${formatBullets(result.reasoning)}</div>
     </div>`:''}
 
     <div style="display:flex;gap:.75rem;margin-top:1.5rem;">
-      <button class="btn btn-primary" style="flex:1;" onclick="openDrawerFromModal(${JSON.stringify(result).replace(/"/g,'&quot;')})">Full Analysis Report &rarr;</button>
       <button class="btn btn-ghost" style="flex:1;" onclick="closeModal()">Close</button>
     </div>
   `;
@@ -1040,6 +1032,32 @@ function showPartnerResultModal(result) {
     verdictAction='Multiple risk signals detected. Reduce exposure and increase check-in frequency.'; }
   else { verdict='High chance of delayed payments'; verdictColor='#991B1B'; verdictBg='rgba(220,38,38,.07)';
     verdictAction='Critical risk profile. Do not extend new credit. Initiate recovery process.'; }
+
+  const allWorkflows = result.loanScores.flatMap(l => l.workflowResults).filter(w => w && w.triggered);
+  const seenWf = new Set();
+  const partnerInsights = allWorkflows.filter(w => {
+    if(seenWf.has(w.name)) return false;
+    seenWf.add(w.name);
+    return ['financial', 'behavioral', 'contextual', 'combined', 'advanced'].includes(w.category) || w.workflowId === 'WF-R05';
+  }).slice(0,6);
+
+  const insightsHTML = partnerInsights.length>0 ? `
+    <div style="margin-bottom:1.25rem;">
+      <div style="font-size:.65rem;font-weight:800;color:var(--muted);letter-spacing:.08em;margin-bottom:.45rem;">PARTNER INTELLIGENCE INSIGHTS</div>
+      ${partnerInsights.map(w=>{
+        const impact = w.scoreImpact||0;
+        const chain  = w.butterflyEffect ? `${w.name} &rarr; ${w.butterflyEffect}` : w.name;
+        return `<div style="display:flex;align-items:flex-start;gap:.6rem;padding:.55rem .7rem;background:${impact<0?'rgba(220,38,38,.04)':'rgba(22,163,74,.04)'};border-left:3px solid ${impact<0?'var(--red)':'var(--green)'};border-radius:0 6px 6px 0;margin-bottom:.4rem;">
+          <div style="min-width:38px;padding:.15rem .3rem;border-radius:4px;font-size:.7rem;font-weight:800;background:${impact<0?'var(--red-light)':'var(--green-light)'};color:${impact<0?'var(--red)':'var(--green)'};text-align:center;flex-shrink:0;">
+            ${impact>0?'+':''}${impact}
+          </div>
+          <div>
+            <div style="font-size:.8rem;font-weight:700;">${chain}</div>
+            ${w.reason?`<div style="font-size:.74rem;color:var(--muted);margin-top:.15rem;">${w.reason}</div>`:''}
+          </div>
+        </div>`;
+      }).join('')}
+    </div>` : '';
 
   document.getElementById('modalContent').innerHTML = `
     <!-- Score summary -->
@@ -1080,6 +1098,8 @@ function showPartnerResultModal(result) {
       <div style="font-size:.8rem;color:var(--muted);">${verdictAction}</div>
     </div>
 
+    ${insightsHTML}
+
     ${loanScores.length>0?`
     <!-- Trust score composition -->
     <div style="margin-bottom:1.25rem;">
@@ -1115,12 +1135,67 @@ function showPartnerResultModal(result) {
       </div>
     </div>
 
-    <div class="reasoning-box" style="margin-bottom:1.25rem;">${result.fullReasoning||result.reasoning||'Partner scored using loan-level aggregation of behavioral and financial signals.'}</div>
+    <div class="reasoning-box" style="margin-bottom:1.25rem;">${formatBullets(result.fullReasoning||result.reasoning)||'Partner scored using loan-level aggregation of behavioral and financial signals.'}</div>
     <div style="display:flex;gap:.75rem;">
-      <button class="btn btn-primary" style="flex:1;" onclick="closeModal();showPartnerLoans('${result.partnerId}')">View Loan Details &rarr;</button>
-      <button class="btn btn-ghost" style="flex:1;" onclick="closeModal()">Close</button>
+      <button class="btn btn-ghost" style="flex:1;" onclick="closeModal();showPartnerLoans('${result.partnerId}')">View Loan Details</button>
+      <button class="btn btn-primary" style="flex:1;" onclick="closeModal();openPartnerDrawer(${JSON.stringify(result).replace(/"/g,'&quot;')})">View Full Analysis &rarr;</button>
     </div>
   `;
+}
+
+function openPartnerDrawer(p) {
+  const pId = p.partnerId || '—';
+  document.getElementById('drawerLoanId').textContent = 'Partner ' + pId;
+  const scoreCls = p.trustScore>=700?'sp-great':p.trustScore>=500?'sp-good':p.trustScore>=300?'sp-ok':'sp-bad';
+  const riskColors = {very_low:'#16A34A',low:'#22C55E',medium:'#F59E0B',high:'#EA580C',very_high:'#DC2626'};
+  document.getElementById('drawerBadges').innerHTML = `
+    <span class="score-pill ${scoreCls}">${p.trustScore}/850 · Grade ${p.grade||'—'}</span>
+    <span class="badge" style="background:rgba(0,0,0,.06);color:${riskColors[p.riskLevel]||'#374151'}">${p.riskLevel?.replace(/_/g,' ')||'—'}</span>`;
+
+  const triggered = (p.loanScores||[]).flatMap(l => l.workflowResults||l.triggeredWorkflows||[]).filter(w=>w&&w.triggered);
+  const bf = (p.loanScores||[]).flatMap(l => l.butterflyTriggers||[]);
+  const ahas = (p.ahaMoments||[]);
+
+  document.getElementById('drawerBody').innerHTML = `
+    <div class="result-grid" style="margin-bottom:1rem;">
+      <div class="rg-item"><div class="rg-val">${p.trustScore||'—'}</div><div class="rg-lbl">Trust Score</div></div>
+      <div class="rg-item"><div class="rg-val">${triggered.length}</div><div class="rg-lbl">Workflows</div></div>
+      <div class="rg-item"><div class="rg-val" style="color:var(--text)">${p.loanScores?.length||0}</div><div class="rg-lbl">Loans</div></div>
+    </div>
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab(event,'tab-wf')">Workflows (${triggered.length})</button>
+      <button class="tab" onclick="switchTab(event,'tab-bf')">Cascade Effects (${bf.length})</button>
+      <button class="tab" onclick="switchTab(event,'tab-reasoning')">AI Reasoning</button>
+    </div>
+    <div id="tab-wf" class="tab-panel active">
+      ${triggered.length===0?'<div style="color:var(--muted);font-size:.83rem;padding:.5rem;">No workflows triggered.</div>':
+        triggered.map(w=>`
+          <div class="wf-item ${w.signal||'neutral'}">
+            <div class="wf-name">
+              <span class="wf-id">[${w.workflowId}]</span> ${w.name}
+              <span class="wf-impact ${(w.scoreImpact||0)>=0?'pos':'neg'}">${(w.scoreImpact||0)>0?'+':''}${w.scoreImpact||0}</span>
+            </div>
+            <div class="wf-reason">${w.reason||''}</div>
+            ${w.butterflyEffect?`<div class="wf-butterfly">Cascade: ${w.butterflyEffect}</div>`:''}
+            ${w.ahaInsight?`<div class="wf-aha">Insight: ${w.ahaInsight}</div>`:''}
+          </div>`).join('')}
+    </div>
+    <div id="tab-bf" class="tab-panel">
+      ${bf.length===0?'<div style="color:var(--muted);font-size:.83rem;padding:.5rem;">No cascade effects detected.</div>':
+        bf.map(b=>`
+          <div class="bf-card">
+            <div class="bf-trigger">Cascade Trigger: ${b.trigger||'Trigger'}</div>
+            <div style="font-size:.75rem;color:var(--muted);margin-bottom:.5rem;">${b.potentialImpact||''}</div>
+            ${b.chain&&b.chain.length>1?`<div class="bf-chain">${b.chain.map((s,i)=>`<div class="bf-step">${s.trim()}</div>${i<b.chain.length-1?'<span class="bf-arrow">→</span>':''}`).join('')}</div>`:''}`).join('')}
+      <br>
+      ${ahas.length>0?`<div class="dsec-title">Key Insights</div>${ahas.map(a=>`<div class="aha-card">${a}</div>`).join('')}`:''}
+    </div>
+    <div id="tab-reasoning" class="tab-panel">
+      <div class="dsec-title">AI Analyst Reasoning</div>
+      <div class="reasoning-box" style="max-height:400px;overflow-y:auto;">${formatBullets(p.fullReasoning||p.reasoning)||'Run health check to generate detailed reasoning.'}</div>
+    </div>`;
+
+  document.getElementById('drawer').classList.add('open');
 }
 
 function openDrawerFromModal(result) {
@@ -1200,7 +1275,7 @@ function openDrawer(l) {
     </div>
     <div id="tab-reasoning" class="tab-panel">
       <div class="dsec-title">AI Analyst Reasoning</div>
-      <div class="reasoning-box" style="max-height:400px;">${l.reasoning||'Run health check to generate detailed reasoning.'}</div>
+      <div class="reasoning-box" style="max-height:400px;">${formatBullets(l.reasoning)||'Run health check to generate detailed reasoning.'}</div>
     </div>`;
 
   document.getElementById('drawer').classList.add('open');

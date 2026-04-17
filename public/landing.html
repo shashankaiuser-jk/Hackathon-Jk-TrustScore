@@ -23,7 +23,7 @@
       backdrop-filter:blur(20px);border-bottom:1px solid var(--border);
       position:sticky;top:0;z-index:100;}
   .logo{display:flex;align-items:center;gap:.75rem;font-size:1.4rem;font-weight:800;color:var(--green2);}
-  .logo-icon{width:36px;height:36px;background:var(--green);border-radius:10px;
+  .logo-icon{height:45px;width:240px;max-width:100%;background:none;border-radius:4px;
              display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
   .nav-links{display:flex;gap:2rem;list-style:none;}
   .nav-links a{color:var(--muted);text-decoration:none;font-size:.9rem;transition:.2s;}
@@ -157,7 +157,7 @@
 <body>
 
 <nav>
-  <div class="logo"><div class="logo-icon">🔍</div> CreditLens AI</div>
+  <div class="logo"><img src="CREDLENSLOGO.jpeg" class="logo-icon" style="background:transparent;object-fit:contain; transform: scale(2.7);" alt="Logo"/></div>
   <ul class="nav-links">
     <li><a href="#features">Features</a></li>
     <li><a href="#pipeline">How it Works</a></li>
@@ -173,7 +173,7 @@
 <section class="hero">
   <div class="hero-badge">🚀 AI-Powered Credit Intelligence v2.0</div>
   <h1>Know Your Loans<br>Before They Know You</h1>
-  <p>CreditLens AI analyses CredCheck, Digitap, GST, CIBIL & Legal signals in real-time to score channel partners and loans with agentic reasoning — before any default happens.</p>
+  <p>Designed for thin-file channel partners who lack traditional credit scores. We analyze behavior, transactions, and loan activity to generate a dynamic Trust Score.</p>
   <div class="hero-btns">
     <button class="btn btn-green btn-xl" onclick="window.location='/index.html'">Open Dashboard →</button>
     <button class="btn btn-outline btn-xl" onclick="document.getElementById('preview').scrollIntoView({behavior:'smooth'})">See Live Demo ↓</button>
@@ -183,9 +183,7 @@
 <!-- STATS -->
 <div class="stats">
   <div class="stat"><div class="stat-num">35+</div><div class="stat-lbl">AI Workflows</div></div>
-  <div class="stat"><div class="stat-num">10</div><div class="stat-lbl">Channel Partners</div></div>
-  <div class="stat"><div class="stat-num">5</div><div class="stat-lbl">Data Sources</div></div>
-  <div class="stat"><div class="stat-num">&lt;2s</div><div class="stat-lbl">Health Check Speed</div></div>
+  <div class="stat"><div class="stat-num">&lt;5s</div><div class="stat-lbl">Health Check Speed</div></div>
   <div class="stat"><div class="stat-num">850</div><div class="stat-lbl">Max Trust Score</div></div>
 </div>
 
@@ -264,12 +262,12 @@
 <section class="features" id="features">
   <div class="section-label">capabilities</div>
   <div class="section-title">Everything You Need to Lend Smart</div>
-  <div class="section-sub">Built on real financial signals — not just CIBIL scores</div>
+  <div class="section-sub">Built on real financial signals — not just traditional credit scores</div>
   <div class="feature-grid">
     <div class="feature-card">
       <div class="feature-icon fi-green">🧠</div>
       <h3>Agentic AI Scoring</h3>
-      <p>35+ dynamic workflows run in parallel across CredCheck, Digitap, GST and legal signals to generate a trust score with full reasoning.</p>
+      <p>35+ dynamic workflows run in parallel across Behavioral Analysis, Financial Activity Insights, Loan Performance Tracking, and Contextual Risk Intelligence to generate a trust score with full reasoning.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon fi-blue">🦋</div>
@@ -294,7 +292,7 @@
     <div class="feature-card">
       <div class="feature-icon fi-red">🤔</div>
       <h3>Contradiction Detection</h3>
-      <p>Catches inconsistencies across data sources — e.g., stable GST revenue but rapidly declining bank balance, signaling hidden stress.</p>
+      <p>Catches inconsistencies across data sources — e.g., stable revenue but rapidly declining bank balance, signaling hidden stress.</p>
     </div>
   </div>
 </section>
@@ -309,7 +307,7 @@
       <div class="step">
         <div class="step-circle">📥</div>
         <div class="step-title">Data Aggregation</div>
-        <div class="step-desc">Pull CredCheck, Digitap, GST 3B, Legal & CIBIL signals</div>
+        <div class="step-desc">Pull Behavioral Analysis, Financial Activity Insights, Loan Performance Tracking, and Contextual Risk Intelligence signals</div>
       </div>
       <div class="step">
         <div class="step-circle">⚙️</div>
@@ -323,7 +321,7 @@
       </div>
       <div class="step">
         <div class="step-circle">🎯</div>
-        <div class="step-title">Loan Scoring</div>
+        <div class="step-title">Scoring</div>
         <div class="step-desc">Each loan scored 0-100 with grade and risk level</div>
       </div>
       <div class="step">
@@ -343,7 +341,7 @@
 </section>
 
 <footer>
-  <div class="logo" style="font-size:1rem;"><div class="logo-icon" style="width:28px;height:28px;font-size:.85rem;">🔍</div> CreditLens AI</div>
+  <div class="logo" style="font-size:1rem;"><img src="CREDLENSLOGO.jpeg" style="height:36px;width:auto;border-radius:4px;object-fit:contain; transform: scale(2.7);" alt="Logo"/></div>
   <div>Built for Demo · Powered by Agentic AI · © 2026</div>
   <div style="display:flex;gap:1.5rem;">
     <a href="/api/health" style="color:var(--muted);text-decoration:none;font-size:.8rem;">API Status</a>

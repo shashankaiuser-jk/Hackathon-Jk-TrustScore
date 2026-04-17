@@ -8,6 +8,26 @@ const db = require('../data/partnersDb');
 const partnerScoreCache = new Map();
 const loanScoreCache    = new Map();
 
+// Pre-score exactly 6 partners for the demo
+(async () => {
+  console.log('[Init] Pre-scoring 6 specific partners for partial demo display...');
+  for (let i = 0; i < 6; i++) {
+    const p = db.partners[i];
+    if (p) {
+      try {
+        const result = await scorePartner({ partnerId: p.partnerId, loans: p.loans });
+        partnerScoreCache.set(p.partnerId, result);
+        if (result.loanScores) {
+          result.loanScores.forEach(ls => loanScoreCache.set(ls.loanId, ls));
+        }
+      } catch (e) {
+        console.error(`[Init err] Failed to pre-score ${p.partnerId}:`, e.message);
+      }
+    }
+  }
+  console.log('[Init] Demo pre-scoring complete.');
+})();
+
 const routes = {};
 function register(method, path, fn) { routes[`${method}:${path}`] = fn; }
 
