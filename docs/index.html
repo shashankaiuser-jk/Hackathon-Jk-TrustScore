@@ -287,6 +287,66 @@ tbody tr:hover{background:var(--light);}
   .main{margin-left:60px;}
   .overview-grid{grid-template-columns:repeat(2,1fr);}
 }
+
+/* ─── ENHANCEMENTS v2 ──────────────────────────────────────────────────────── */
+
+/* Pattern Cards */
+.pattern-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.55rem;margin-bottom:1.25rem;}
+.pattern-card{background:var(--light);border-radius:10px;padding:.8rem .9rem;
+  border-left:3px solid transparent;cursor:pointer;transition:.2s;
+  animation:patternIn .35s ease both;}
+.pattern-card:hover{transform:translateY(-1px);box-shadow:var(--shadow-md);}
+.pattern-card.sev-green{border-color:var(--green);}
+.pattern-card.sev-yellow{border-color:var(--gold);}
+.pattern-card.sev-red{border-color:var(--red);}
+.pattern-icon{font-size:1.1rem;margin-bottom:.25rem;}
+.pattern-name{font-size:.77rem;font-weight:800;margin-bottom:.1rem;}
+.pattern-desc{font-size:.69rem;color:var(--muted);line-height:1.35;}
+.pattern-sev{font-size:.62rem;font-weight:700;padding:.1rem .4rem;
+  border-radius:4px;display:inline-block;margin-top:.28rem;}
+.sev-green .pattern-sev{background:rgba(22,163,74,.12);color:var(--green);}
+.sev-yellow .pattern-sev{background:rgba(245,158,11,.12);color:#92400E;}
+.sev-red .pattern-sev{background:rgba(220,38,38,.12);color:var(--red);}
+@keyframes patternIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+/* Workflow Step Flow */
+.wf-flow-item{background:var(--light);border-radius:12px;padding:.9rem 1rem;
+  margin-bottom:.65rem;cursor:pointer;animation:stepReveal .4s ease both;}
+.wf-flow-item:hover{box-shadow:var(--shadow-md);}
+@keyframes stepReveal{from{opacity:0;transform:translateX(-8px);}to{opacity:1;transform:translateX(0);}}
+@keyframes nodeIn{from{opacity:0;transform:scale(.8);}to{opacity:1;transform:scale(1);}}
+
+/* Score Breakdown */
+.sb-row{margin-bottom:.6rem;}
+.sb-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:.28rem;}
+.sb-name{font-size:.78rem;font-weight:700;}
+.sb-pct{font-size:.75rem;font-weight:800;}
+.sb-track{height:7px;background:var(--border);border-radius:4px;overflow:hidden;}
+.sb-fill{height:100%;border-radius:4px;transition:width 1s cubic-bezier(.4,0,.2,1);}
+
+/* Butterfly Enhanced */
+.bf-flow{background:var(--light);border-radius:10px;padding:1rem;margin-bottom:.75rem;}
+.bf-label-row{display:flex;justify-content:space-between;font-size:.61rem;
+  font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;
+  margin-bottom:.6rem;padding:.3rem .6rem;background:var(--white);border-radius:6px;}
+
+/* Simple Mode Toggle */
+.simple-toggle-bar{display:flex;align-items:center;justify-content:space-between;
+  background:rgba(37,99,235,.06);border:1px solid rgba(37,99,235,.15);
+  border-radius:10px;padding:.65rem 1rem;margin-bottom:1.25rem;cursor:pointer;}
+.simple-toggle-label{font-size:.82rem;font-weight:700;color:var(--blue2);}
+.simple-toggle-desc{font-size:.69rem;color:var(--muted);margin-top:.08rem;}
+.toggle-switch{position:relative;width:40px;height:22px;flex-shrink:0;}
+.toggle-switch input{opacity:0;width:0;height:0;position:absolute;}
+.toggle-slider{position:absolute;cursor:pointer;inset:0;background:#D1D5DB;
+  border-radius:11px;transition:.25s;}
+.toggle-slider::before{content:'';position:absolute;width:16px;height:16px;
+  left:3px;top:3px;background:#fff;border-radius:50%;transition:.25s;
+  box-shadow:0 1px 3px rgba(0,0,0,.2);}
+input:checked+.toggle-slider{background:var(--blue2);}
+input:checked+.toggle-slider::before{transform:translateX(18px);}
+.complex-text{transition:opacity .2s;}
+.simple-text{transition:opacity .2s;}
 </style>
 </head>
 <body>
@@ -909,6 +969,7 @@ function formatBullets(text) {
 function showResultModal(result) {
   if (document.getElementById('healthModal')._interval)
     clearInterval(document.getElementById('healthModal')._interval);
+  state._lastLoanResult = result;
 
   const scoreColor = result.score>=80?'var(--green)':result.score>=60?'var(--blue2)':result.score>=40?'var(--gold)':'var(--red)';
   const factors    = result.topFactors || [];
@@ -1009,8 +1070,31 @@ function showResultModal(result) {
       <div class="reasoning-box">${formatBullets(result.reasoning)}</div>
     </div>`:''}
 
+    <!-- Simple Mode Toggle -->
+    <div class="simple-toggle-bar" onclick="document.getElementById('smToggleModal').click()">
+      <div>
+        <div class="simple-toggle-label">💡 Explain Simply</div>
+        <div class="simple-toggle-desc">Switch to plain-language explanations</div>
+      </div>
+      <label class="toggle-switch" onclick="event.stopPropagation()">
+        <input type="checkbox" id="smToggleModal" onchange="toggleSimpleMode(this)">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+
+    <!-- Score Impact Breakdown -->
+    ${buildScoreBreakdown((result.workflowResults||[]).filter(w=>w&&w.triggered))}
+
+    <!-- Detected Patterns -->
+    ${buildPatternCards(triggered, bf, result.score||0)}
+
+    <!-- AI Workflow Visualization -->
+    <div style="font-size:.65rem;font-weight:800;color:var(--muted);letter-spacing:.08em;margin-bottom:.6rem;">HOW AI REACHED THIS SCORE</div>
+    ${buildWorkflowFlow(triggered, false)}
+
     <div style="display:flex;gap:.75rem;margin-top:1.5rem;">
       <button class="btn btn-ghost" style="flex:1;" onclick="closeModal()">Close</button>
+      <button class="btn btn-primary" style="flex:1;" onclick="closeModal();openDrawer(state._lastLoanResult)">Full Analysis &rarr;</button>
     </div>
   `;
 }
@@ -1162,9 +1246,23 @@ function openPartnerDrawer(p) {
       <div class="rg-item"><div class="rg-val">${triggered.length}</div><div class="rg-lbl">Workflows</div></div>
       <div class="rg-item"><div class="rg-val" style="color:var(--text)">${p.loanScores?.length||0}</div><div class="rg-lbl">Loans</div></div>
     </div>
+    <!-- Simple Mode Toggle (Partner Drawer) -->
+    <div class="simple-toggle-bar" style="margin-bottom:.75rem;" onclick="document.getElementById('smTogglePartnerDrawer').click()">
+      <div>
+        <div class="simple-toggle-label">💡 Explain Simply</div>
+        <div class="simple-toggle-desc">Plain-language explanations</div>
+      </div>
+      <label class="toggle-switch" onclick="event.stopPropagation()">
+        <input type="checkbox" id="smTogglePartnerDrawer" onchange="toggleSimpleMode(this)">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+
     <div class="tabs">
       <button class="tab active" onclick="switchTab(event,'tab-wf')">Workflows (${triggered.length})</button>
-      <button class="tab" onclick="switchTab(event,'tab-bf')">Cascade Effects (${bf.length})</button>
+      <button class="tab" onclick="switchTab(event,'tab-ai-journey-p')">AI Journey</button>
+      <button class="tab" onclick="switchTab(event,'tab-patterns-p')">Patterns</button>
+      <button class="tab" onclick="switchTab(event,'tab-bf')">Cascade (${bf.length})</button>
       <button class="tab" onclick="switchTab(event,'tab-reasoning')">AI Reasoning</button>
     </div>
     <div id="tab-wf" class="tab-panel active">
@@ -1180,15 +1278,16 @@ function openPartnerDrawer(p) {
             ${w.ahaInsight?`<div class="wf-aha">Insight: ${w.ahaInsight}</div>`:''}
           </div>`).join('')}
     </div>
+    <div id="tab-ai-journey-p" class="tab-panel">
+      <div style="font-size:.65rem;font-weight:800;color:var(--muted);letter-spacing:.08em;margin-bottom:.65rem;">HOW AI REACHED THIS SCORE</div>
+      ${buildWorkflowFlow(triggered, false)}
+      <div style="margin-top:1rem;">${buildScoreBreakdown(triggered)}</div>
+    </div>
+    <div id="tab-patterns-p" class="tab-panel">
+      ${buildPatternCards(triggered, bf, Math.round((p.trustScore||0)/850*100))}
+    </div>
     <div id="tab-bf" class="tab-panel">
-      ${bf.length===0?'<div style="color:var(--muted);font-size:.83rem;padding:.5rem;">No cascade effects detected.</div>':
-        bf.map(b=>`
-          <div class="bf-card">
-            <div class="bf-trigger">Cascade Trigger: ${b.trigger||'Trigger'}</div>
-            <div style="font-size:.75rem;color:var(--muted);margin-bottom:.5rem;">${b.potentialImpact||''}</div>
-            ${b.chain&&b.chain.length>1?`<div class="bf-chain">${b.chain.map((s,i)=>`<div class="bf-step">${s.trim()}</div>${i<b.chain.length-1?'<span class="bf-arrow">→</span>':''}`).join('')}</div>`:''}`).join('')}
-      <br>
-      ${ahas.length>0?`<div class="dsec-title">Key Insights</div>${ahas.map(a=>`<div class="aha-card">${a}</div>`).join('')}`:''}
+      ${buildButterflyEnhanced(bf, ahas)}
     </div>
     <div id="tab-reasoning" class="tab-panel">
       <div class="dsec-title">AI Analyst Reasoning</div>
@@ -1232,10 +1331,24 @@ function openDrawer(l) {
         ${(l.workflowSummary?.scoreImpact||0)>=0?'+':''}${(l.workflowSummary?.scoreImpact||0).toFixed(0)}
       </div><div class="rg-lbl">Score Impact</div></div>
     </div>
+    <!-- Simple Mode Toggle (Drawer) -->
+    <div class="simple-toggle-bar" style="margin-bottom:.75rem;" onclick="document.getElementById('smToggleDrawer').click()">
+      <div>
+        <div class="simple-toggle-label">💡 Explain Simply</div>
+        <div class="simple-toggle-desc">Plain-language explanations</div>
+      </div>
+      <label class="toggle-switch" onclick="event.stopPropagation()">
+        <input type="checkbox" id="smToggleDrawer" onchange="toggleSimpleMode(this)">
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+
     <div class="tabs">
       <button class="tab active" onclick="switchTab(event,'tab-factors')">Factors</button>
+      <button class="tab" onclick="switchTab(event,'tab-ai-journey')">AI Journey</button>
+      <button class="tab" onclick="switchTab(event,'tab-patterns')">Patterns</button>
       <button class="tab" onclick="switchTab(event,'tab-wf')">Workflows (${triggered.length})</button>
-      <button class="tab" onclick="switchTab(event,'tab-bf')">Cascade Effects (${bf.length})</button>
+      <button class="tab" onclick="switchTab(event,'tab-bf')">Cascade (${bf.length})</button>
       <button class="tab" onclick="switchTab(event,'tab-reasoning')">Reasoning</button>
     </div>
     <div id="tab-factors" class="tab-panel active">
@@ -1249,6 +1362,15 @@ function openDrawer(l) {
               <div class="factor-bar-wrap"><div class="factor-bar" style="width:${Math.min(100,(f.weight||0)*100)}%;background:${f.impact==='positive'?'var(--green)':f.impact==='negative'?'var(--red)':'#9CA3AF'};"></div></div>
             </div>
           </div>`).join('')}
+    </div>
+    <div id="tab-ai-journey" class="tab-panel">
+      <div style="font-size:.65rem;font-weight:800;color:var(--muted);letter-spacing:.08em;margin-bottom:.65rem;">HOW AI REACHED THIS SCORE</div>
+      ${buildWorkflowFlow(triggered, false)}
+      <!-- Score Impact Breakdown -->
+      <div style="margin-top:1rem;">${buildScoreBreakdown(triggered)}</div>
+    </div>
+    <div id="tab-patterns" class="tab-panel">
+      ${buildPatternCards(triggered, bf, l.score||0)}
     </div>
     <div id="tab-wf" class="tab-panel">
       ${triggered.length===0?'<div style="color:var(--muted);font-size:.83rem;padding:.5rem;">No workflows triggered yet.</div>':
@@ -1264,14 +1386,7 @@ function openDrawer(l) {
           </div>`).join('')}
     </div>
     <div id="tab-bf" class="tab-panel">
-      ${bf.length===0?'<div style="color:var(--muted);font-size:.83rem;padding:.5rem;">No cascade effects detected.</div>':
-        bf.map(b=>`
-          <div class="bf-card">
-            <div class="bf-trigger">Cascade Trigger: ${b.trigger||'Trigger'}</div>
-            <div style="font-size:.75rem;color:var(--muted);margin-bottom:.5rem;">${b.potentialImpact||''}</div>
-            ${b.chain&&b.chain.length>1?`<div class="bf-chain">${b.chain.map((s,i)=>`<div class="bf-step">${s.trim()}</div>${i<b.chain.length-1?'<span class="bf-arrow">→</span>':''}`).join('')}</div>`:''}`).join('')}
-      <br>
-      ${ahas.length>0?`<div class="dsec-title">Key Insights</div>${ahas.map(a=>`<div class="aha-card">${a}</div>`).join('')}`:''}
+      ${buildButterflyEnhanced(bf, ahas)}
     </div>
     <div id="tab-reasoning" class="tab-panel">
       <div class="dsec-title">AI Analyst Reasoning</div>
@@ -1360,6 +1475,198 @@ function getChatResponse(msg) {
       : `Current portfolio looks stable. Monitor partners with score 400-550 for early warning signs.`;
   }
   return `I can help you understand credit scores, risk factors, cascade effects, and portfolio health. Try asking: "Why is the score low?", "Which partner is safest?", "How many loans are at risk?", or "What will happen next month?"`;
+}
+
+// ─── ENHANCEMENTS v2: Simple Mode ────────────────────────────────────────────
+function toggleSimpleMode(el) {
+  const on = el.checked;
+  document.querySelectorAll('.complex-text').forEach(e => { e.style.display = on ? 'none' : ''; });
+  document.querySelectorAll('.simple-text').forEach(e => { e.style.display = on ? '' : 'none'; });
+}
+
+// ─── ENHANCEMENTS v2: Pattern Cards ──────────────────────────────────────────
+function buildPatternCards(triggered, bf, score) {
+  const allPats = [
+    { key:'partial',  icon:'⚠️',  name:'Frequent Partial Payments',  desc:'Borrower consistently underpays EMI obligations',   baseSev:'yellow' },
+    { key:'multi',    icon:'🔗',  name:'Multiple Active Loans',       desc:'Debt spread across several lenders simultaneously', baseSev:'yellow' },
+    { key:'cashflow', icon:'📉',  name:'Cash Flow Instability',       desc:'Irregular inflows create repayment uncertainty',    baseSev:'yellow' },
+    { key:'expenses', icon:'📈',  name:'Rising Expenses vs Income',   desc:'Expense growth outpacing revenue growth',           baseSev:'red'    },
+    { key:'gst',      icon:'🧾',  name:'GST Filing Irregularity',     desc:'Delayed returns signal revenue volatility',         baseSev:'yellow' },
+    { key:'cascade',  icon:'🌊',  name:'Cascade Risk Detected',       desc:'One event can trigger multiple downstream impacts', baseSev:'red'    },
+    { key:'balance',  icon:'💰',  name:'Declining Bank Balance',      desc:'Average balance trending down month-over-month',   baseSev:'red'    },
+    { key:'bounce',   icon:'↩️',  name:'Payment Bounce Pattern',      desc:'Repeated failed transactions indicate stress',      baseSev:'red'    },
+    { key:'healthy',  icon:'✅',  name:'Strong Repayment History',    desc:'Consistent on-time payments build trust',           baseSev:'green'  },
+    { key:'gstgood',  icon:'📋',  name:'Regular GST Compliance',      desc:'Timely filings indicate healthy business flow',     baseSev:'green'  },
+  ];
+
+  const active = new Set();
+  (triggered||[]).forEach(w => {
+    const c = (w.category||'').toLowerCase(), n = (w.name||'').toLowerCase();
+    if (c==='repayment'||n.includes('partial')||n.includes('repay'))         active.add('partial');
+    if (c==='multi_loan'||n.includes('multi')||n.includes('overlap'))        active.add('multi');
+    if (c==='financial'&&(n.includes('cash')||n.includes('flow')||n.includes('liquid'))) active.add('cashflow');
+    if (c==='financial'&&(n.includes('expense')||n.includes('income')||n.includes('revenue'))) active.add('expenses');
+    if (c==='contextual'||n.includes('gst')||n.includes('filing'))           active.add('gst');
+    if (c==='behavioral'||n.includes('bounce')||n.includes('failed')||n.includes('neft')) active.add('bounce');
+    if (c==='financial'&&(n.includes('balance')||n.includes('declining')))   active.add('balance');
+    if ((w.scoreImpact||0) > 0) { active.add('healthy'); active.add('gstgood'); }
+  });
+  if ((bf||[]).length > 0) active.add('cascade');
+
+  let sel = allPats.filter(p => active.has(p.key));
+  if (sel.length < 4) {
+    sel = [...sel, ...allPats.filter(p => !active.has(p.key) && p.baseSev !== 'green').slice(0, 4-sel.length)];
+  }
+  sel = sel.slice(0, 6);
+
+  const sevOf = p => (p.baseSev === 'green') ? 'green' : (score < 45 && p.baseSev === 'yellow') ? 'red' : p.baseSev;
+  const sevLabel = s => s==='green' ? 'Low Risk' : s==='yellow' ? 'Moderate' : 'High Risk';
+
+  return `
+    <div style="font-size:.65rem;font-weight:800;color:var(--muted);letter-spacing:.08em;margin-bottom:.6rem;">DETECTED PATTERNS</div>
+    <div class="pattern-grid">
+      ${sel.map((p,i) => `
+        <div class="pattern-card sev-${sevOf(p)}" style="animation-delay:${i*0.07}s" title="${p.desc}">
+          <div class="pattern-icon">${p.icon}</div>
+          <div class="pattern-name">${p.name}</div>
+          <div class="pattern-desc">${p.desc}</div>
+          <div class="pattern-sev">${sevLabel(sevOf(p))}</div>
+        </div>`).join('')}
+    </div>`;
+}
+
+// ─── ENHANCEMENTS v2: Workflow Step Flow ─────────────────────────────────────
+function buildWorkflowFlow(triggered, simpleOn) {
+  const steps = (triggered||[]).filter(w => w.reason).slice(0, 3);
+  if (steps.length === 0) return '<div style="color:var(--muted);font-size:.83rem;padding:.5rem;">Run health check to see AI reasoning steps.</div>';
+
+  return steps.map((w, wi) => {
+    const impact = w.scoreImpact || 0;
+    const col   = impact < 0 ? 'var(--red)' : 'var(--green)';
+    const colBg = impact < 0 ? 'var(--red-light)' : 'var(--green-light)';
+    const nodes = [
+      { icon:'🔍', label:'Pattern Detected',  text: w.name || 'Signal Detected' },
+      { icon:'🤖', label:'AI Analysis',        text: w.reason || 'Cross-referencing financial signals' },
+      { icon:'⚡', label:'Risk Impact',        text: w.butterflyEffect || (impact < 0 ? 'Negative risk signal identified' : 'Positive indicator confirmed') },
+      { icon:'📊', label:'Score Change',       text: `${impact > 0 ? '+' : ''}${impact} points applied to health score` },
+    ];
+
+    return `
+      <div class="wf-flow-item" style="animation-delay:${wi*0.12}s;"
+           onclick="var d=this.querySelector('.wf-flow-detail');d.style.display=d.style.display==='none'||!d.style.display?'block':'none'">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.35rem;">
+          <div style="font-size:.8rem;font-weight:800;">${w.name}</div>
+          <div style="display:flex;align-items:center;gap:.4rem;">
+            <div style="font-size:.75rem;font-weight:800;color:${col};background:${colBg};padding:.18rem .45rem;border-radius:5px;">${impact>0?'+':''}${impact} pts</div>
+            <div style="font-size:.65rem;color:var(--muted);">tap ↓</div>
+          </div>
+        </div>
+        <div class="wf-flow-detail" style="display:none;margin-top:.75rem;">
+          <div class="complex-text" style="${simpleOn?'display:none':''}">
+            ${nodes.map((s, si, arr) => `
+              <div style="display:flex;gap:.6rem;align-items:flex-start;animation:nodeIn .3s ease ${si*0.08}s both;">
+                <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:28px;">
+                  <div style="width:26px;height:26px;border-radius:50%;background:var(--white);border:2px solid ${si===3?col:'var(--border2)'};display:flex;align-items:center;justify-content:center;font-size:.78rem;">${s.icon}</div>
+                  ${si < arr.length-1 ? '<div style="width:2px;height:16px;background:var(--border2);margin:.1rem 0;"></div>' : ''}
+                </div>
+                <div style="padding-top:.2rem;${si < arr.length-1 ? 'padding-bottom:.35rem;' : ''}">
+                  <div style="font-size:.61rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;">${s.label}</div>
+                  <div style="font-size:.8rem;font-weight:700;color:${si===3?col:'var(--text)'};margin-top:.06rem;">${s.text}</div>
+                </div>
+              </div>`).join('')}
+          </div>
+          <div class="simple-text" style="${simpleOn?'':'display:none'};font-size:.84rem;color:var(--text);line-height:1.8;padding:.65rem .8rem;background:var(--white);border-radius:8px;">
+            ${buildSimpleExplanation(w)}
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function buildSimpleExplanation(w) {
+  const n = (w.name||'').toLowerCase();
+  const impact = w.scoreImpact || 0;
+  const sign = impact > 0 ? `+${impact}` : `${impact}`;
+  if (n.includes('partial'))                      return `Borrower paid less than required &rarr; Less trust in repayments &rarr; Score: <strong>${sign}</strong>`;
+  if (n.includes('multi')||n.includes('overlap')) return `Too many loans at once &rarr; Less money left to repay &rarr; Score: <strong>${sign}</strong>`;
+  if (n.includes('cash')||n.includes('liquid'))   return `Money coming in is not enough &rarr; Risk of missing payments &rarr; Score: <strong>${sign}</strong>`;
+  if (n.includes('gst')||n.includes('filing'))    return `GST not filed on time &rarr; Business may be struggling &rarr; Score: <strong>${sign}</strong>`;
+  if (n.includes('bounce')||n.includes('failed')) return `Payments kept failing &rarr; Bank account is running low &rarr; Score: <strong>${sign}</strong>`;
+  if (n.includes('balance')||n.includes('declin'))return `Bank balance dropping &rarr; Harder to repay loans &rarr; Score: <strong>${sign}</strong>`;
+  if (n.includes('expense')||n.includes('income'))return `Spending more than earning &rarr; Financial pressure building &rarr; Score: <strong>${sign}</strong>`;
+  return `${w.name} was detected &rarr; ${impact < 0 ? 'Risk increased' : 'Positive sign found'} &rarr; Score: <strong>${sign}</strong>`;
+}
+
+// ─── ENHANCEMENTS v2: Score Breakdown ────────────────────────────────────────
+function buildScoreBreakdown(allWorkflows) {
+  const cats = [
+    { keys:['repayment','multi_loan'],              label:'Repayment Impact',    icon:'💳', color:'var(--blue2)' },
+    { keys:['financial'],                            label:'Financial Impact',    icon:'🏦', color:'var(--green)' },
+    { keys:['behavioral','advanced'],                label:'Behavioural Impact',  icon:'📊', color:'var(--gold)'  },
+    { keys:['contextual','combined','butterfly'],    label:'Contextual Impact',   icon:'🌐', color:'var(--orange)'},
+  ];
+
+  const impacts = cats.map(c => {
+    const total = (allWorkflows||[])
+      .filter(w => c.keys.includes(w.category||''))
+      .reduce((s,w) => s + Math.abs(w.scoreImpact||0), 0);
+    return { ...c, total };
+  });
+  const maxVal = Math.max(...impacts.map(c=>c.total), 1);
+
+  return `
+    <div style="font-size:.65rem;font-weight:800;color:var(--muted);letter-spacing:.08em;margin-bottom:.6rem;">WHY THIS SCORE?</div>
+    ${impacts.map(c => {
+      const pct = Math.round((c.total/maxVal)*100);
+      return `
+        <div class="sb-row">
+          <div class="sb-label">
+            <span class="sb-name">${c.icon} ${c.label}</span>
+            <span class="sb-pct" style="color:${c.color};">${pct}%</span>
+          </div>
+          <div class="sb-track">
+            <div class="sb-fill" style="width:${pct}%;background:${c.color};"></div>
+          </div>
+        </div>`;
+    }).join('')}`;
+}
+
+// ─── ENHANCEMENTS v2: Butterfly Enhanced ─────────────────────────────────────
+function buildButterflyEnhanced(bf, ahas) {
+  if (!bf || bf.length === 0)
+    return '<div style="color:var(--muted);font-size:.83rem;padding:.5rem;">No cascade effects detected in this analysis.</div>';
+
+  const cards = bf.map(b => {
+    const chain = (b.chain && b.chain.length > 1)
+      ? b.chain
+      : [b.trigger, b.potentialImpact||'Downstream impact'].filter(Boolean);
+    const stageColor = (i, len) => i===0 ? 'var(--orange)' : i===len-1 ? 'var(--red)' : 'var(--gold)';
+    const stageBg    = (i, len) => i===0 ? 'rgba(234,88,12,.1)' : i===len-1 ? 'rgba(220,38,38,.1)' : 'rgba(245,158,11,.1)';
+    const stageLabel = (i, len) => i===0 ? 'Trigger' : i===len-1 ? 'Outcome' : 'Impact';
+
+    return `
+      <div class="bf-flow">
+        <div class="bf-label-row">
+          <span>🔴 Trigger</span><span>&rarr;</span><span>⚡ Impact</span><span>&rarr;</span><span>💥 Outcome</span>
+        </div>
+        ${chain.map((step, i) => `
+          <div style="display:flex;gap:.6rem;align-items:flex-start;${i<chain.length-1?'margin-bottom:1.2rem;position:relative;':''}">
+            ${i<chain.length-1 ? `<div style="position:absolute;left:12px;top:26px;width:2px;height:calc(100% + .55rem);background:linear-gradient(${stageColor(i,chain.length)},${stageColor(i+1,chain.length)});z-index:0;"></div>` : ''}
+            <div style="width:26px;height:26px;border-radius:50%;background:${stageBg(i,chain.length)};border:2px solid ${stageColor(i,chain.length)};display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:${stageColor(i,chain.length)};flex-shrink:0;position:relative;z-index:1;">${i+1}</div>
+            <div style="background:var(--white);border:1px solid var(--border2);border-radius:8px;padding:.4rem .75rem;flex:1;">
+              <div style="font-size:.61rem;font-weight:700;color:${stageColor(i,chain.length)};text-transform:uppercase;letter-spacing:.05em;">${stageLabel(i,chain.length)}</div>
+              <div style="font-size:.8rem;font-weight:700;margin-top:.04rem;">${step.trim()}</div>
+            </div>
+          </div>`).join('')}
+        ${b.potentialImpact ? `<div style="margin-top:.75rem;font-size:.73rem;color:var(--muted);background:rgba(220,38,38,.05);border:1px solid rgba(220,38,38,.1);border-radius:6px;padding:.4rem .7rem;">Potential outcome: ${b.potentialImpact}</div>` : ''}
+      </div>`;
+  }).join('');
+
+  const ahaHtml = ahas && ahas.length > 0
+    ? `<div class="dsec-title" style="margin-top:.5rem;">Key Insights</div>${ahas.map(a=>`<div class="aha-card">${a}</div>`).join('')}`
+    : '';
+
+  return cards + ahaHtml;
 }
 
 // ─── Close overlays on click outside ─────────────────────────────────────────
