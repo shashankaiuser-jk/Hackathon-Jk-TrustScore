@@ -8,25 +8,27 @@ const db = require('../data/partnersDb');
 const partnerScoreCache = new Map();
 const loanScoreCache    = new Map();
 
-// Pre-score exactly 6 partners for the demo
-(async () => {
-  console.log('[Init] Pre-scoring 6 specific partners for partial demo display...');
-  for (let i = 0; i < 6; i++) {
-    const p = db.partners[i];
-    if (p) {
+// ── Lazy background pre-scoring (non-blocking, safe for serverless) ──────────
+// Only runs on long-lived servers (local dev / Render / Railway).
+// Vercel serverless: skipped automatically — estimated scores used instead.
+if (!process.env.VERCEL) {
+  setImmediate(async () => {
+    console.log('[Init] Pre-scoring first 4 partners in background...');
+    for (let i = 0; i < Math.min(4, db.partners.length); i++) {
+      const p = db.partners[i];
+      if (!p) continue;
       try {
         const result = await scorePartner({ partnerId: p.partnerId, loans: p.loans });
         partnerScoreCache.set(p.partnerId, result);
-        if (result.loanScores) {
-          result.loanScores.forEach(ls => loanScoreCache.set(ls.loanId, ls));
-        }
+        if (result.loanScores) result.loanScores.forEach(ls => loanScoreCache.set(ls.loanId, ls));
+        console.log(`[Init] ✓ ${p.partnerId} pre-scored`);
       } catch (e) {
-        console.error(`[Init err] Failed to pre-score ${p.partnerId}:`, e.message);
+        console.error(`[Init err] ${p.partnerId}:`, e.message);
       }
     }
-  }
-  console.log('[Init] Demo pre-scoring complete.');
-})();
+    console.log('[Init] Background pre-scoring complete.');
+  });
+}
 
 const routes = {};
 function register(method, path, fn) { routes[`${method}:${path}`] = fn; }

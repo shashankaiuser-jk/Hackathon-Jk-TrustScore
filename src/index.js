@@ -23,7 +23,9 @@ const PUBLIC  = path.join(__dirname, '../docs');
 const MIME = {
   '.html': 'text/html', '.css': 'text/css',
   '.js': 'application/javascript', '.json': 'application/json',
-  '.png': 'image/png', '.ico': 'image/x-icon',
+  '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg',
+  '.gif': 'image/gif', '.svg': 'image/svg+xml', '.ico': 'image/x-icon',
+  '.woff': 'font/woff', '.woff2': 'font/woff2', '.ttf': 'font/ttf',
 };
 
 // ── Read body ──────────────────────────────────────────────────────────────
@@ -51,16 +53,30 @@ const requestHandler = async (req, res) => {
 
   // ── Serve static UI ───────────────────────────────────────────────────
   if (!url.startsWith('/api')) {
-    const filePath = path.join(PUBLIC, url === '/' ? 'landing.html' : url);
-    const ext      = path.extname(filePath);
-    try {
-      const content = fs.readFileSync(filePath);
-      res.writeHead(200, { 'Content-Type': MIME[ext] || 'text/plain' });
-      return res.end(content);
-    } catch (_) {
-      // Fall through to 404
-      res.writeHead(404); return res.end('Not found');
+    // Resolve file path — fallback chain: exact → index.html → landing.html
+    const candidates = [];
+    if (url === '/' || url === '') {
+      candidates.push(path.join(PUBLIC, 'index.html'));
+      candidates.push(path.join(PUBLIC, 'landing.html'));
+    } else {
+      candidates.push(path.join(PUBLIC, url));
+      // If the path has no extension, try .html
+      if (!path.extname(url)) candidates.push(path.join(PUBLIC, url + '.html'));
     }
+
+    for (const filePath of candidates) {
+      // Basic path traversal guard
+      if (!filePath.startsWith(PUBLIC)) { res.writeHead(403); return res.end('Forbidden'); }
+      const ext = path.extname(filePath) || '.html';
+      try {
+        const content = fs.readFileSync(filePath);
+        res.writeHead(200, { 'Content-Type': MIME[ext] || 'application/octet-stream' });
+        return res.end(content);
+      } catch (_) { /* try next candidate */ }
+    }
+
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    return res.end('Not found');
   }
 
   // ── API routes ─────────────────────────────────────────────────────────
